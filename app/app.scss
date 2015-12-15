@@ -1,0 +1,9 @@
+@import "theme";
+
+body {
+	font-family: "Source Sans Pro";
+	margin: 0;
+	padding: 0;
+	background-color: $cBackground;
+	color: $cForeground;
+}

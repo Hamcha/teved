@@ -1,10 +1,13 @@
-import React from 'react';
+import React from "react";
+import styles from "./Editor.module.scss";
 
 const Editor = React.createClass({
 	render(): any {
 		"use strict";
-		return <div>
-			<h1>lel</h1>
+		return <div className={styles.root}>
+			<textarea style={{"width": "400px", "height": "300px"}}>
+			</textarea>
+			<button onclick={parsedump}>Parse</button>
 		</div>;
 	}
 });
