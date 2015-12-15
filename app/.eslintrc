@@ -27,6 +27,7 @@
     "no-useless-call": 2,
     "no-fallthrough" : 1,
     "yoda"           : 1,
+    "no-console"     : 1,
     "quotes"         : [2, "double"],
     'react-in-jsx-scope'         : 0,
     "no-mixed-spaces-and-tabs"   : [2, "smart-tabs"],

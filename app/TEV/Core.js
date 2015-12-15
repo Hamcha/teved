@@ -9,6 +9,10 @@ const MaxStages: Number = 16;
 class Core {
 	constructor() {
 		// Stages
+		this.stages = [];
+		while (this.stages.length < MaxStages) {
+			this.stages.push(new Stage());
+		}
 		this.nstages = 0;
 		this.SetNumTevStages(InitialStageCount);
 
@@ -24,12 +28,12 @@ class Core {
 		];
 	}
 	SetNumTevStages(n: Number) {
-		this.nstages = Math.max(0, Math.min(n, MaxStages));
-		// Scale up if we need
-		// We don't scale down to preserve settings
-		while (this.stages.length < this.nstages) {
-			this.stages.push(new Stage());
+		// Make n an integer and check boundaries
+		n = n|0;
+		if (n < 0 || n > MaxStages) {
+			throw "Stage number must be between 0 and " + MaxStages;
 		}
+		this.nstages = n;
 	}
 	SetTevColorOp(stageid: Number,
 	              op     : String,
@@ -37,7 +41,14 @@ class Core {
 	              scale  : String,
 	              clamp  : String,
 	              regid  : Number) {
-		//TODO Bound check
+		// Make stageid an integer and check boundaries
+		stageid = stageid|0;
+		if (stageid < 0 || stageid > MaxStages) {
+			throw "Invalid stage id";
+		}
+		if (stageid > this.nstages) {
+			console.warn("Modifying an inactive stage");
+		}
 		this.stages[stageid].setColorOp(op, bias, scale, clamp, regid);
 	}
 	SetTevAlphaOp(stageid: Number,
@@ -46,7 +57,7 @@ class Core {
 	              scale  : String,
 	              clamp  : String,
 	              regid  : Number) {
-		//TODO Bound check
+		// Make stageid an integer and check boundaries
 		this.stages[stageid].setAlphaOp(op, bias, scale, clamp, regid);
 	}
 	SetTevSwapModeTable(swapid: Number,
