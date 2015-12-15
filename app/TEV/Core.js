@@ -1,5 +1,6 @@
 import Stage     from "Stage";
 import SwapTable from "SwapTable";
+import Color     from "Color";
 
 // Default number of stages is 1
 const InitialStageCount: Number = 1;
@@ -35,6 +36,22 @@ class Core {
 		}
 		this.nstages = n;
 	}
+	checkStage(stageid: Number) {
+		// Check boundaries
+		if (stageid < 0 || stageid > MaxStages) {
+			return false;
+		}
+		if (stageid > this.nstages) {
+			console.warn("Modifying an inactive stage");
+		}
+		return true;
+	}
+	SetTevOrder(stageid: Number, texcoord: Number, texmap: Number, color: Color) {
+		stageid = stageid|0;
+		if (!this.checkStage(stageid)) {
+			throw "Invalid stage id";
+		}
+	}
 	SetTevColorOp(stageid: Number,
 	              op     : String,
 	              bias   : String,
@@ -43,11 +60,8 @@ class Core {
 	              regid  : Number) {
 		// Make stageid an integer and check boundaries
 		stageid = stageid|0;
-		if (stageid < 0 || stageid > MaxStages) {
+		if (!this.checkStage(stageid)) {
 			throw "Invalid stage id";
-		}
-		if (stageid > this.nstages) {
-			console.warn("Modifying an inactive stage");
 		}
 		this.stages[stageid].setColorOp(op, bias, scale, clamp, regid);
 	}
@@ -57,7 +71,10 @@ class Core {
 	              scale  : String,
 	              clamp  : String,
 	              regid  : Number) {
-		// Make stageid an integer and check boundaries
+		stageid = stageid|0;
+		if (!this.checkStage(stageid)) {
+			throw "Invalid stage id";
+		}
 		this.stages[stageid].setAlphaOp(op, bias, scale, clamp, regid);
 	}
 	SetTevSwapModeTable(swapid: Number,
