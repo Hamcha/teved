@@ -1,0 +1,43 @@
+{
+  // I want to use babel-eslint for parsing!
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+    "no-multi-spaces": 0,
+    "key-spacing"    : 0,
+    "strict"         : [2, "function"],
+    "comma-dangle"   : [2, "never"],
+    "no-extra-semi"  : 2,
+    "curly"          : 2,
+    "default-case"   : 2,
+    "dot-notation"   : 2,
+    "eqeqeq"         : 2,
+    "no-alert"       : 2,
+    "no-caller"      : 2,
+    "no-div-regex"   : 2,
+    "no-else-return" : 2,
+    "no-empty-label" : 2,
+    "no-eq-null"     : 2,
+    "no-eval"        : 2,
+    "no-extra-bind"  : 2,
+    "no-useless-call": 2,
+    "no-fallthrough" : 1,
+    "yoda"           : 1,
+    'react-in-jsx-scope'         : 0,
+    "no-mixed-spaces-and-tabs"   : [2, "smart-tabs"],
+    "no-unexpected-multiline"    : 2,
+    "no-extend-native"           : 2,
+    "consistent-return"          : 2,
+    "flow-vars/define-flow-type" : 1,
+    "flow-vars/use-flow-type"    : 1
+  },
+  "plugins": [
+    "react",
+    "flow-vars"
+  ],
+  "globals": {}
+}
