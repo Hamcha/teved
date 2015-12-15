@@ -1,5 +1,5 @@
-class TEVRegister {
+class Register {
 	constructor() {}
 }
 
-export default TEVRegister;
+export default Register;
