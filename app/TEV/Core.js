@@ -1,5 +1,4 @@
 import Stage     from "Stage";
-import Register  from "Register";
 import SwapTable from "SwapTable";
 
 // Default number of stages is 1
@@ -14,12 +13,7 @@ class Core {
 		this.SetNumTevStages(InitialStageCount);
 
 		// Registers
-		this.regs = [
-			new Register(),
-			new Register(),
-			new Register()
-		];
-		this.lastreg = 0;
+		this.register = [0, 0, 0, 0]; // 0 if Intermediate, Color if constant
 
 		// Swap mode tables
 		this.swap = [
@@ -31,6 +25,8 @@ class Core {
 	}
 	SetNumTevStages(n: Number) {
 		this.nstages = Math.max(0, Math.min(n, MaxStages));
+		// Scale up if we need
+		// We don't scale down to preserve settings
 		while (this.stages.length < this.nstages) {
 			this.stages.push(new Stage());
 		}
@@ -40,7 +36,18 @@ class Core {
 	              bias   : String,
 	              scale  : String,
 	              clamp  : String,
-	              regid  : String) {
+	              regid  : Number) {
+		//TODO Bound check
+		this.stages[stageid].setColorOp(op, bias, scale, clamp, regid);
+	}
+	SetTevAlphaOp(stageid: Number,
+	              op     : String,
+	              bias   : String,
+	              scale  : String,
+	              clamp  : String,
+	              regid  : Number) {
+		//TODO Bound check
+		this.stages[stageid].setAlphaOp(op, bias, scale, clamp, regid);
 	}
 	SetTevSwapModeTable(swapid: Number,
 	                    r     : String,
@@ -55,6 +62,14 @@ class Core {
 
 		// Assign channels
 		this.swap[swapid] = new SwapTable(r, g, b, a);
+	}
+	SetTevColor(regid: Number, color: Color) {
+		// Make regid an integer and check boundaries
+		regid = regid|0;
+		if (regid < 0 || regid > 3) {
+			throw "Invalid register id";
+		}
+		this.register[regid] = color;
 	}
 }
 
