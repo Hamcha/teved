@@ -7,7 +7,7 @@ const config = Object.create(baseConfig);
 
 config.debug = true;
 
-config.devtool = 'eval';
+config.devtool = 'cheap-module-eval-source-map';
 
 console.log("[Development config] Adding hot-reload entrypoints");
 config.entry = [
@@ -20,17 +20,28 @@ config.output.publicPath = 'http://localhost:3000/dist/';
 
 config.module.loaders[0].loaders = ["react-hot", "babel?presets[]=react,presets[]=es2015"];
 
+console.log("[Development config] Adding CSS compiling");
+
 config.module.loaders.push({
-	test: /^((?!\.module).)*\.css$/,
+	test: /^((?!\.module).)*\.scss$/,
 	loaders: [
-		'style-loader',
-		'css-loader'
+		'style',
+		'css',
+		'sass?sourceMap'
 	]
 }, {
-	test: /\.module\.css$/,
+	test: /^((?!\.module).)*\.css$/,
 	loaders: [
-		'style-loader',
-		'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!'
+		'style',
+		'css',
+		'sass?sourceMap'
+	]
+}, {
+	test: /\.module\.scss$/,
+	loaders: [
+		'style',
+		'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!',
+		'sass?sourceMap'
 	]
 });
 

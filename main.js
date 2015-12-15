@@ -1,7 +1,7 @@
 /* eslint strict: 0 */
-'use strict';
+"use strict";
 
-const electron = require('electron');
+const electron = require("electron");
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const crashReporter = electron.crashReporter;
@@ -10,18 +10,19 @@ let mainWindow = null;
 
 crashReporter.start();
 
-if (process.env.NODE_ENV === 'development') {
-	require('electron-debug')();
+if (process.env.NODE_ENV === "development") {
+	require("electron-debug")();
 }
 
-app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') app.quit();
+app.on("window-all-closed", () => {
+	if (process.platform !== "darwin") app.quit();
 });
 
-app.on('ready', () => {
+app.on("ready", () => {
 	mainWindow = new BrowserWindow({
 		width: 800,
-		height: 600
+		height: 600,
+		frame: true
 	});
 	mainWindow.setMenu(null);
 
@@ -31,11 +32,11 @@ app.on('ready', () => {
 		mainWindow.loadURL(`file://${__dirname}/app/app.html`);
 	}
 
-	mainWindow.on('closed', () => {
+	mainWindow.on("closed", () => {
 		mainWindow = null;
 	});
 
-	if (process.env.NODE_ENV === 'development') {
+	if (process.env.NODE_ENV === "development") {
 		mainWindow.openDevTools();
 	}
 });
