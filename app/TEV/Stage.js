@@ -45,6 +45,24 @@ class TEVStage {
 		this.alpha_clamp = clamp;
 		this.alpha_regid = regid;
 	}
+	setOrder(texcoord: Number,
+	         texmap  : Number,
+	         color   : Color) {
+		this.texcoord = texcoord;
+		this.texmap = texmap;
+		this.color = color;
+	}
+	setSwapMode(ras_sel: Number,
+	            tex_sel: Number) {
+		this.ras_swap = ras_sel;
+		this.tex_swap = tex_sel;
+	}
+	setColorKonst(kid: Number) {
+		this.color_konst = kid
+	}
+	setAlphaKonst(kid: Number) {
+		this.alpha_konst = kid
+	}
 }
 
 export default TEVStage;

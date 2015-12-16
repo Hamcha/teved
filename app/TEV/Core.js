@@ -27,6 +27,14 @@ class Core {
 			new SwapTable(),
 			new SwapTable()
 		];
+
+		// Konst colors
+		this.konst = [
+			new Color(),
+			new Color(),
+			new Color(),
+			new Color()
+		];
 	}
 	SetNumTevStages(n: Number) {
 		// Make n an integer and check boundaries
@@ -35,6 +43,13 @@ class Core {
 			throw "Stage number must be between 0 and " + MaxStages;
 		}
 		this.nstages = n;
+	}
+	SetTevKColor(kid: Number, color: Color) {
+		kid = kid|0;
+		if (kid < 0 || kid > this.konst.length) {
+			throw "Invalid KColor id";
+		}
+		this.konst[kid] = color;
 	}
 	checkStage(stageid: Number) {
 		// Check boundaries
@@ -51,6 +66,7 @@ class Core {
 		if (!this.checkStage(stageid)) {
 			throw "Invalid stage id";
 		}
+		this.stages[stageid].setOrder(texcoord, texmap, color);
 	}
 	SetTevColorOp(stageid: Number,
 	              op     : String,
@@ -76,6 +92,37 @@ class Core {
 			throw "Invalid stage id";
 		}
 		this.stages[stageid].setAlphaOp(op, bias, scale, clamp, regid);
+	}
+	SetTevKColorSel(stageid: Number, kid: String) {
+		stageid = stageid|0;
+		if (!this.checkStage(stageid)) {
+			throw "Invalid stage id";
+		}
+		this.stages[stageid].setColorKonst(kid)
+	}
+	SetTevKAlphaSel(stageid: Number, kid: String) {
+		stageid = stageid|0;
+		if (!this.checkStage(stageid)) {
+			throw "Invalid stage id";
+		}
+		this.stages[stageid].setAlphaKonst(kid)
+	}
+	SetTevSwapMode(stageid: Number,
+	               ras_sel: Number,
+	               tex_sel: Number) {
+		stageid = stageid|0;
+		if (!this.checkStage(stageid)) {
+			throw "Invalid stage id";
+		}
+		ras_sel = ras_sel|0;
+		if (ras_sel < 0 || ras_sel > this.swap.length) {
+			throw "Invalid Raster Swap table";
+		}
+		tex_sel = tex_sel|0;
+		if (tex_sel < 0 || tex_sel > this.swap.length) {
+			throw "Invalid Texture Swap table";
+		}
+		this.stages[stageid].setSwapMode(ras_sel, tex_sel);
 	}
 	SetTevSwapModeTable(swapid: Number,
 	                    r     : String,
