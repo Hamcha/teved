@@ -1,11 +1,17 @@
-const Channel: Object = {
+/* @flow */
+
+export type Channel = string
+
+export const Channels: { [key: string]: Channel } = {
 	Red:   "GX_CH_RED",
 	Green: "GX_CH_GREEN",
 	Blue:  "GX_CH_BLUE",
 	Alpha: "GX_CH_ALPHA"
 };
 
-const Konst: Object = {
+export type Konst = string
+
+export const Konsts: { [key: string]: Konst } = {
 	"1"    : "GX_TEV_KCSEL_1",
 	"7/8"  : "GX_TEV_KCSEL_7_8",
 	"3/4"  : "GX_TEV_KCSEL_3_4",
@@ -35,5 +41,3 @@ const Konst: Object = {
 	"K2.A" : "GX_TEV_KCSEL_K2_A",
 	"K3.A" : "GX_TEV_KCSEL_K3_A"
 };
-
-export { Channel, Konst }

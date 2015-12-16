@@ -1,8 +1,14 @@
+/* @flow */
+
 class Color {
-	constructor(r: Number = 0,
-	            g: Number = 0,
-	            b: Number = 0,
-	            a: Number = 255) {
+	r: number;
+	g: number;
+	b: number;
+	a: number;
+	constructor(r: number = 0,
+	            g: number = 0,
+	            b: number = 0,
+	            a: number = 255) {
 		this.r = r;
 		this.g = g;
 		this.b = b;

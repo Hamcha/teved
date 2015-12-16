@@ -1,13 +1,21 @@
-import Stage     from "Stage";
-import SwapTable from "SwapTable";
-import Color     from "Color";
+/* @flow */
+
+import Stage     from "./Stage";
+import SwapTable from "./SwapTable";
+import Color     from "./Color";
+import type {Channel} from "./Enums";
 
 // Default number of stages is 1
-const InitialStageCount: Number = 1;
+const InitialStageCount: number = 1;
 // Maximum number of stages is 16
-const MaxStages: Number = 16;
+const MaxStages: number = 16;
 
 class Core {
+	stages  : Array<Stage>;
+	nstages : number;
+	register: Array<?Color>;
+	swap    : Array<SwapTable>;
+	konst   : Array<Color>;
 	constructor() {
 		// Stages
 		this.stages = [];
@@ -18,7 +26,7 @@ class Core {
 		this.SetNumTevStages(InitialStageCount);
 
 		// Registers
-		this.register = [0, 0, 0, 0]; // 0 if Intermediate, Color if constant
+		this.register = [null, null, null, null]; // null if Intermediate, Color if constant
 
 		// Swap mode tables
 		this.swap = [
@@ -36,7 +44,7 @@ class Core {
 			new Color()
 		];
 	}
-	SetNumTevStages(n: Number) {
+	SetNumTevStages(n: number) {
 		// Make n an integer and check boundaries
 		n = n|0;
 		if (n < 0 || n > MaxStages) {
@@ -44,14 +52,14 @@ class Core {
 		}
 		this.nstages = n;
 	}
-	SetTevKColor(kid: Number, color: Color) {
+	SetTevKColor(kid: number, color: Color) {
 		kid = kid|0;
 		if (kid < 0 || kid > this.konst.length) {
 			throw "Invalid KColor id";
 		}
 		this.konst[kid] = color;
 	}
-	checkStage(stageid: Number) {
+	checkStage(stageid: number): bool {
 		// Check boundaries
 		if (stageid < 0 || stageid > MaxStages) {
 			return false;
@@ -61,19 +69,19 @@ class Core {
 		}
 		return true;
 	}
-	SetTevOrder(stageid: Number, texcoord: Number, texmap: Number, color: Color) {
+	SetTevOrder(stageid: number, texcoord: number, texmap: number, color: Color) {
 		stageid = stageid|0;
 		if (!this.checkStage(stageid)) {
 			throw "Invalid stage id";
 		}
 		this.stages[stageid].setOrder(texcoord, texmap, color);
 	}
-	SetTevColorOp(stageid: Number,
-	              op     : String,
-	              bias   : String,
-	              scale  : String,
-	              clamp  : String,
-	              regid  : Number) {
+	SetTevColorOp(stageid: number,
+	              op     : string,
+	              bias   : string,
+	              scale  : string,
+	              clamp  : string,
+	              regid  : number) {
 		// Make stageid an integer and check boundaries
 		stageid = stageid|0;
 		if (!this.checkStage(stageid)) {
@@ -81,35 +89,35 @@ class Core {
 		}
 		this.stages[stageid].setColorOp(op, bias, scale, clamp, regid);
 	}
-	SetTevAlphaOp(stageid: Number,
-	              op     : String,
-	              bias   : String,
-	              scale  : String,
-	              clamp  : String,
-	              regid  : Number) {
+	SetTevAlphaOp(stageid: number,
+	              op     : string,
+	              bias   : string,
+	              scale  : string,
+	              clamp  : string,
+	              regid  : number) {
 		stageid = stageid|0;
 		if (!this.checkStage(stageid)) {
 			throw "Invalid stage id";
 		}
 		this.stages[stageid].setAlphaOp(op, bias, scale, clamp, regid);
 	}
-	SetTevKColorSel(stageid: Number, kid: String) {
+	SetTevKColorSel(stageid: number, kid: string) {
 		stageid = stageid|0;
 		if (!this.checkStage(stageid)) {
 			throw "Invalid stage id";
 		}
 		this.stages[stageid].setColorKonst(kid)
 	}
-	SetTevKAlphaSel(stageid: Number, kid: String) {
+	SetTevKAlphaSel(stageid: number, kid: string) {
 		stageid = stageid|0;
 		if (!this.checkStage(stageid)) {
 			throw "Invalid stage id";
 		}
 		this.stages[stageid].setAlphaKonst(kid)
 	}
-	SetTevSwapMode(stageid: Number,
-	               ras_sel: Number,
-	               tex_sel: Number) {
+	SetTevSwapMode(stageid: number,
+	               ras_sel: number,
+	               tex_sel: number) {
 		stageid = stageid|0;
 		if (!this.checkStage(stageid)) {
 			throw "Invalid stage id";
@@ -124,11 +132,11 @@ class Core {
 		}
 		this.stages[stageid].setSwapMode(ras_sel, tex_sel);
 	}
-	SetTevSwapModeTable(swapid: Number,
-	                    r     : String,
-	                    g     : String,
-	                    b     : String,
-	                    a     : String) {
+	SetTevSwapModeTable(swapid: number,
+	                    r     : Channel,
+	                    g     : Channel,
+	                    b     : Channel,
+	                    a     : Channel) {
 		// Make swap table id an integer and check boundaries
 		swapid = swapid|0;
 		if (swapid < 0 || swapid > 3) {
@@ -138,7 +146,7 @@ class Core {
 		// Assign channels
 		this.swap[swapid] = new SwapTable(r, g, b, a);
 	}
-	SetTevColor(regid: Number, color: Color) {
+	SetTevColor(regid: number, color: Color) {
 		// Make regid an integer and check boundaries
 		regid = regid|0;
 		if (regid < 0 || regid > 3) {
