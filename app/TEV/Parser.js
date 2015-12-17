@@ -5,8 +5,9 @@ import Core from "./Core";
 // Get rid of comments
 let stripComments: (code: string) => string = function(code: string): string {
 	"use strict";
-	//TODO
-	return code;
+	const block = /\*.*?\*/g;
+	const line = /\/\/.*?\n/g;
+	return code.replace(block, "").replace(line, "");
 }
 
 class Parser {
@@ -16,14 +17,16 @@ class Parser {
 	}
 	parse(code: string) {
 		code = stripComments(code);
-		let lines: Array<string> = code.split(";");
+		const lines: Array<string> = code.split(";");
 		for (let line of lines) {
-			let parts: Array<string> = line.split("(");
+			const parts: Array<string> = line.split("(");
 
 			// We only support function calls for now
 			if (parts.length < 2) {
 				continue;
 			}
+
+			//TODO
 		}
 	}
 }

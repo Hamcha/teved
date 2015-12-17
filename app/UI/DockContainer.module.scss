@@ -1,0 +1,39 @@
+@import 'ui.debug';
+
+.container {
+	@include border-inset(2px, green);
+	position: absolute;
+	top: 0; left: 0; right: 0; bottom: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.zone {
+	flex: 1;
+	@include border-inset(1px, #faa);
+}
+
+.zone:empty {
+	display: none;
+}
+
+.middle {
+	flex: 3;
+	display: flex;
+	flex-direction: row;
+}
+
+.center {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+}
+
+.content {
+	flex: 2;
+	display: block !important;
+}
+
+.dockableWidget {
+	@include border-inset(2px, orange);
+}

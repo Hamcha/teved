@@ -1,0 +1,5 @@
+@import 'ui.debug';
+
+.widget {
+	@include border-inset(1px, red);
+}

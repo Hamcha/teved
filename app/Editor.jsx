@@ -1,17 +1,27 @@
 /* @flow */
 
 import React from "react";
+import Widget from "./UI/Widget";
+import DockContainer from "./UI/DockContainer";
 import styles from "./Editor.module.scss";
 
-const Editor = React.createClass({
+class StageContainer extends React.Component {
 	render(): any {
-		"use strict";
+		return <Widget>
+			<div>Yay!</div>
+		</Widget>;
+	}
+}
+
+class Editor extends React.Component {
+	render(): any {
 		return <div className={styles.root}>
-			<textarea style={{"width": "400px", "height": "300px"}}>
-			</textarea>
-			<button onclick={parsedump}>Parse</button>
+			<DockContainer>
+				<StageContainer dock="left" />
+				<StageContainer dock="content" />
+			</DockContainer>
 		</div>;
 	}
-});
+}
 
 export default Editor;
