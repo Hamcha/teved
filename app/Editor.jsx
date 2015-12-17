@@ -19,6 +19,15 @@ class Editor extends React.Component {
 				<StageContainer dock={{position: "left"}} />
 				<StageContainer dock={{position: "left"}} />
 				<StageContainer dock={{position: "subbottom"}} />
+				<StageContainer dock={{position: "subbottom"}} />
+				<StageContainer dock={{position: "right"}} />
+				<StageContainer dock={{position: "right"}} />
+				<StageContainer dock={{position: "bottom"}} />
+				<StageContainer dock={{position: "bottom"}} />
+				<StageContainer dock={{position: "top"}} />
+				<StageContainer dock={{position: "top"}} />
+				<StageContainer dock={{position: "subtop"}} />
+				<StageContainer dock={{position: "subtop"}} />
 				<StageContainer dock={{position: "content", noBorder: true}} />
 			</DockContainer>
 		</div>;

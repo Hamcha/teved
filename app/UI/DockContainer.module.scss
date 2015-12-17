@@ -15,25 +15,35 @@
 	background-color: $dockContainerBackground;
 
 	&:empty { display: none; }
+
 	&.left {
 		border-right: $dockBorderThickness solid $dockBorderColor;
 		flex-direction: column;
-		.dockableWidget { border-right: 0; }
+		.dockableWidget { border-right: 0; border-bottom: 0; }
 	}
 	&.right {
 		border-left: $dockBorderThickness solid $dockBorderColor;
 		flex-direction: column;
-		.dockableWidget { border-left: 0; }
+		.dockableWidget { border-left: 0; border-bottom: 0; }
 	}
 	&.top, &.subtop {
 		border-bottom: $dockBorderThickness solid $dockBorderColor;
 		flex-direction: row;
-		.dockableWidget { border-bottom: 0; }
+		.dockableWidget { border-left: 0; border-bottom: 0; border-top: 0; }
 	}
 	&.bottom, &.subbottom {
 		border-top: $dockBorderThickness solid $dockBorderColor;
 		flex-direction: row;
-		.dockableWidget { border-top: 0; }
+		.dockableWidget { border-left: 0; border-bottom: 0; border-top: 0; }
+	}
+
+	&.left *:first-child, &.right *:first-child {
+		border-top: 0;
+	}
+
+	&.top *:last-child, &.subtop *:last-child,
+	&.bottom *:last-child, &.subbottom *:last-child {
+		border-right: 0;
 	}
 }
 
@@ -66,7 +76,6 @@
 .dockableWidget {
 	margin: $dockBorderMargin;
 	border: $dockBorderThickness solid $dockBorderColor;
-	border-top: 0;
 	flex: 1;
 	display: flex;
 	flex-direction: column;
