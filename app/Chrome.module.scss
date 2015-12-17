@@ -1,0 +1,65 @@
+@import "theme";
+
+.titleBar {
+    display: flex;
+    -webkit-user-select: none;
+    background: $cBackground;
+}
+
+.titleText {
+    flex: 1;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.8rem;
+    -webkit-app-region: drag;
+    cursor: grab;
+    color: $titlebarTextColor;
+    text-transform: uppercase;
+    padding: 0.4rem;
+    height: 0.3rem;
+}
+
+.btnContainer {
+    flex-grow: 0;
+    text-align: right;
+    padding: 0.5rem;
+    padding-right: 0;
+    margin-top: -0.5rem;
+    height: 1.1rem;
+}
+
+.tbButton {
+    display: inline-block;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5em;
+    padding-top: 0;
+    color: $titlebarBtnColor;
+
+    &:hover {
+        color: $titlebarBtnHoverText;
+        background: $titlebarBtnHoverBG;
+    }
+}
+
+.rootWnd {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0; right: 0; left: 0; bottom: 0;
+}
+
+.uiWrapper {
+    flex: 1; position: relative;
+}
+
+.uiContainer {
+    position: absolute;
+    top: 2px; bottom: 2px; left: 2px; right: 2px;
+}
+
+.hlbtn {
+    display: inline-block;
+    vertical-align: top;
+    background: $titlebarBtnXHighlight;
+}

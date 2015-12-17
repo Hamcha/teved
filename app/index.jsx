@@ -5,9 +5,12 @@ import { render } from "react-dom";
 import "./app.scss";
 import "source-sans-pro";
 
+import Chrome from "./Chrome";
 import Editor from "./Editor";
 
 render(
-	<Editor />,
+    <Chrome>
+	   <Editor />
+    </Chrome>,
 	document.getElementById("root")
 );

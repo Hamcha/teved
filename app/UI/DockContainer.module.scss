@@ -6,6 +6,7 @@
 	top: 0; left: 0; right: 0; bottom: 0;
 	display: flex;
 	flex-direction: column;
+	border: $dockBorderThickness solid $dockBorderColor;
 }
 
 .zone {
@@ -19,12 +20,12 @@
 	&.left {
 		border-right: $dockBorderThickness solid $dockBorderColor;
 		flex-direction: column;
-		.dockableWidget { border-right: 0; border-bottom: 0; }
+		.dockableWidget { border-left: 0; border-bottom: 0; border-right: 0; }
 	}
 	&.right {
 		border-left: $dockBorderThickness solid $dockBorderColor;
 		flex-direction: column;
-		.dockableWidget { border-left: 0; border-bottom: 0; }
+		.dockableWidget { border-left: 0; border-bottom: 0; border-right: 0; }
 	}
 	&.top, &.subtop {
 		border-bottom: $dockBorderThickness solid $dockBorderColor;
