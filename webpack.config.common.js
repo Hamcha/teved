@@ -5,7 +5,7 @@ module.exports = {
 	module: {
 		loaders: [{
 			test: /\.jsx?$/,
-			loaders: ['babel?presets[]=react,presets[]=es2015'],
+			loaders: ['babel?presets[]=react,presets[]=es2015,presets[]=stage-0'],
 			exclude: /node_modules/
 		},{
 			test: /\.eot|.otf|.woff|\.ttf/,

@@ -4,10 +4,14 @@ import React from "react";
 import styles from "./Widget.module.scss";
 
 class Widget extends React.Component {
+	static getWidgetName(): string { return "Unnamed Widget"; }
 	render(): any {
 		return <div className={styles.widget}>
-			{this.props.children}
+			{this.renderWidget()}
 		</div>;
+	}
+	renderWidget() {
+		return <span />;
 	}
 }
 

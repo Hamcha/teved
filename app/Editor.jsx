@@ -5,11 +5,10 @@ import Widget from "./UI/Widget";
 import DockContainer from "./UI/DockContainer";
 import styles from "./Editor.module.scss";
 
-class StageContainer extends React.Component {
-	render(): any {
-		return <Widget>
-			<div style={{padding: "0.3rem"}}>Yay!</div>
-		</Widget>;
+class StageContainer extends Widget {
+	static getWidgetName(): string { return "TEV Stages"; }
+	renderWidget(): any {
+		return <div style={{padding: "0.3rem"}}>hOI!</div>;
 	}
 }
 

@@ -3,15 +3,26 @@
 import React from "react";
 import styles from "./DockContainer.module.scss";
 
-let multi = function(...parts: Array<string>): string {
+const multi = function(...parts: Array<string>): string {
 	"use strict";
 	return parts.join(" ");
 };
 
+const getWidgetTitle = function(children: Array<Widget>|Widget): string {
+	"use strict";
+	// Take first widget if there are more than one
+	if (Array.isArray(children)) {
+		if (children.length > 0) {
+			children = children[0];
+		}
+	}
+	return children.type.getWidgetName();
+}
+
 class DockableWidget extends React.Component {
 	render(): any {
 		let title = <div draggable="true" className={styles.dockableHead}>
-			<i className="fa fa-bars"></i> WIDGET NAME HERE
+			<i className="fa fa-bars"></i> {getWidgetTitle(this.props.children)}
 		</div>;
 
 		// Check for props
