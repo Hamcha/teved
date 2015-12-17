@@ -9,8 +9,8 @@ import Chrome from "./Chrome";
 import Editor from "./Editor";
 
 render(
-    <Chrome>
-	   <Editor />
-    </Chrome>,
+	<Chrome>
+		<Editor />
+	</Chrome>,
 	document.getElementById("root")
 );
