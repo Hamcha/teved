@@ -1,7 +1,7 @@
 @import 'ui.debug';
+@import "../theme";
 
 .container {
-	@include border-inset(2px, green);
 	position: absolute;
 	top: 0; left: 0; right: 0; bottom: 0;
 	display: flex;
@@ -10,11 +10,31 @@
 
 .zone {
 	flex: 1;
-	@include border-inset(1px, #faa);
-}
+	display: flex;
+	position: relative;
+	background-color: $dockContainerBackground;
 
-.zone:empty {
-	display: none;
+	&:empty { display: none; }
+	&.left {
+		border-right: $dockBorderThickness solid $dockBorderColor;
+		flex-direction: column;
+		.dockableWidget { margin-right: 0; }
+	}
+	&.right {
+		border-left: $dockBorderThickness solid $dockBorderColor;
+		flex-direction: column;
+		.dockableWidget { margin-left: 0; }
+	}
+	&.top, &.subtop {
+		border-bottom: $dockBorderThickness solid $dockBorderColor;
+		flex-direction: row;
+		.dockableWidget { margin-bottom: 0; }
+	}
+	&.bottom, &.subbottom {
+		border-bottom: $dockBorderThickness solid $dockBorderColor;
+		flex-direction: row;
+		.dockableWidget { margin-top: 0; }
+	}
 }
 
 .middle {
@@ -31,9 +51,22 @@
 
 .content {
 	flex: 2;
-	display: block !important;
+}
+
+.dockableHead {
+	background-color: $dockBorderHeadBackground;
+	border-bottom: $dockBorderThickness solid $dockBorderColor;
+	font-size: $dockBorderHeadSize;
+	text-transform: uppercase;
+	padding: $dockBorderHeadPadding;
 }
 
 .dockableWidget {
-	@include border-inset(2px, orange);
+	margin: $dockBorderThickness;
+	flex: 1;
+}
+
+.widgetContent {
+	flex: 1;
+	display: flex;
 }

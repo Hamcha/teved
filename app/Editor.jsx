@@ -8,7 +8,7 @@ import styles from "./Editor.module.scss";
 class StageContainer extends React.Component {
 	render(): any {
 		return <Widget>
-			<div>Yay!</div>
+			<div style={{padding: "0.3rem"}}>Yay!</div>
 		</Widget>;
 	}
 }
@@ -17,8 +17,8 @@ class Editor extends React.Component {
 	render(): any {
 		return <div className={styles.root}>
 			<DockContainer>
-				<StageContainer dock="left" />
-				<StageContainer dock="content" />
+				<StageContainer dock={{position: "left"}} />
+				<StageContainer dockProps={{"noBorder": true}} dock="content" />
 			</DockContainer>
 		</div>;
 	}

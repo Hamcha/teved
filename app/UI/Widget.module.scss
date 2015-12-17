@@ -1,5 +1,7 @@
 @import 'ui.debug';
+@import '../theme';
 
 .widget {
-	@include border-inset(1px, red);
+	background: $widgetBackground;
+	flex: 1;
 }
