@@ -62,8 +62,16 @@ class DockContainer extends React.Component {
 		};
 
 		this.props.children.forEach(function(widget, i) {
-			let side = (typeof widget.props.dock === "string" && widget.props.dock in items) ? widget.props.dock : "left";
-			items[side].push(<DockableWidget key={"w."+i} data={widget.props.dockProps} >{widget}</DockableWidget>);
+			const data = widget.props.dock;
+			let side = "left"; // Default if not set
+			if (typeof data !== "undefined") {
+				// Check side
+				if (typeof data.position === "string" && data.position in items) {
+					side = data.position;
+				}
+			}
+
+			items[side].push(<DockableWidget key={"w."+i} data={widget.props.dock} >{widget}</DockableWidget>);
 		})
 
 		return <div className={styles.container}>

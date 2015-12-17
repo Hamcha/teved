@@ -17,7 +17,9 @@ class Editor extends React.Component {
 		return <div className={styles.root}>
 			<DockContainer>
 				<StageContainer dock={{position: "left"}} />
-				<StageContainer dockProps={{"noBorder": true}} dock="content" />
+				<StageContainer dock={{position: "left"}} />
+				<StageContainer dock={{position: "subbottom"}} />
+				<StageContainer dock={{position: "content", noBorder: true}} />
 			</DockContainer>
 		</div>;
 	}
