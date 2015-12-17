@@ -69,7 +69,7 @@
 	border-bottom: $dockBorderThickness solid $dockBorderColor;
 	font-size: $dockBorderHeadSize;
 	text-transform: uppercase;
-	padding: $dockBorderHeadPadding;
+	padding: $dockBorderHeadPadding $dockBorderHeadPadding*1.8;
 	flex: 1;
 	flex-grow: 0;
 }
