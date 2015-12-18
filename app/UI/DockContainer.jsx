@@ -19,9 +19,56 @@ const getWidgetTitle = function(children: Array<Widget>|Widget): string {
 	return children.type.getWidgetName();
 }
 
+/* START Drag callbacks */
+const startDrag = function(parent: DockContainer, id: number): (ev: Event) => void {
+	"use strict";
+	return function(ev: Event) {
+		parent.setDrag(true, id);
+		ev.dataTransfer.setData("text/plain", id);
+	};
+};
+
+const endDrag = function(parent: DockContainer): (ev: Event) => void {
+	"use strict";
+	return function() {
+		parent.setDrag(false);
+	};
+};
+
+const allowDrop = function(container: DockZone): (ev: Event) => void {
+	"use strict";
+	return function(ev: Event) {
+		ev.preventDefault();
+		ev.dataTransfer.dropEffect = "move";
+		container.setDrop(true);
+	}
+};
+
+const resetDrop = function(container: DockZone): (ev: Event) => void {
+	"use strict";
+	return function(ev: Event) {
+		ev.preventDefault();
+		container.setDrop(false);
+	}
+};
+
+const handleDrop = function(parent: DockContainer, zone: string): (ev: Event) => void {
+	"use strict";
+	return function(ev: Event) {
+		parent.moveWidget(ev.dataTransfer.getData("text"), zone);
+		ev.stopPropagation();
+		ev.preventDefault();
+	}
+};
+/* END Drag callbacks */
+
 class DockableWidget extends React.Component {
+	static propTypes: Object = {
+		widgetid: React.PropTypes.number.isRequired,
+		data    : React.PropTypes.object
+	};
 	render(): any {
-		let title = <div draggable="true" className={styles.dockableHead}>
+		let title = <div draggable="true" onDragStart={startDrag(this.props.parent, this.props.widgetid)} className={styles.dockableHead}>
 			<i className="fa fa-bars"></i> {getWidgetTitle(this.props.children)}
 		</div>;
 
@@ -49,7 +96,54 @@ class DockableWidget extends React.Component {
 	}
 }
 
+class DockZone extends React.Component {
+	static propTypes: Object = {
+		zone: React.PropTypes.string.isRequired
+	};
+	state: Object = {
+		drop: false
+	};
+	setDrop(drop: bool) {
+		this.setState({ drop });
+	}
+	render(): any {
+		let zoneStyle = [styles.zone, styles[this.props.zone]];
+		if (this.props.drag === true) {
+			zoneStyle.push(styles.zoneDragTarget);
+		}
+		if (this.state.drop === true) {
+			zoneStyle.push(styles.zoneDropTarget);
+		}
+		return <div onDrop={handleDrop(this.props.parent, this.props.zone)}
+		            onDragOver={allowDrop(this)}
+		            onDragLeave={resetDrop(this)}
+		            onDragExit={resetDrop(this)}
+		            className={multi.apply(this, zoneStyle)}>
+			{this.props.children}
+		</div>;
+	}
+}
+
 class DockContainer extends React.Component {
+	state: Object = {
+		drag: false,
+		dragid: 0
+	};
+	setDrag(drag: bool, dragid: number) {
+		this.setState({ drag, dragid });
+	}
+	moveWidget(widgetid: number, zone: string) {
+		// Reset zone highlight status
+		this.refs["zone." + zone].setDrop(false);
+		// Change widget position
+		if (typeof this.props.children[widgetid].props.dock === "undefined") {
+			this.props.children[widgetid].props.dock = {
+				"position": zone
+			};
+		} else {
+			this.props.children[widgetid].props.dock.position = zone;
+		}
+	}
 	render(): any {
 		let items: {[key: string]: Array<any>} = {
 			top      : [],
@@ -61,7 +155,8 @@ class DockContainer extends React.Component {
 			content  : []
 		};
 
-		this.props.children.forEach(function(widget, i) {
+		const that = this;
+		this.props.children.forEach(function(widget, i): (widget: any, i: number) => void {
 			const data = widget.props.dock;
 			let side = "left"; // Default if not set
 			if (typeof data !== "undefined") {
@@ -71,35 +166,36 @@ class DockContainer extends React.Component {
 				}
 			}
 
-			items[side].push(<DockableWidget key={"w."+i} data={widget.props.dock} >{widget}</DockableWidget>);
+			items[side].push(<DockableWidget parent={that} widgetid={i} key={"w."+i} data={widget.props.dock} >{widget}</DockableWidget>);
 		})
 
-		return <div className={styles.container}>
-			<div className={multi(styles.zone, styles.top)}>
+		const drag = this.state.drag;
+		return <div onDragEnd={endDrag(this)} className={styles.container}>
+			<DockZone parent={this} drag={drag} zone="top" ref="zone.top">
 				{items.top}
-			</div>
+			</DockZone>
 			<div className={styles.middle}>
-				<div className={multi(styles.zone, styles.left)}>
+				<DockZone parent={this} drag={drag} zone="left" ref="zone.left">
 					{items.left}
-				</div>
+				</DockZone>
 				<div className={styles.center}>
-					<div className={multi(styles.zone, styles.subtop)}>
+					<DockZone parent={this} drag={drag} zone="subtop" ref="zone.subtop">
 						{items.subtop}
-					</div>
+					</DockZone>
 					<div className={multi(styles.zone, styles.content)}>
 						{items.content}
 					</div>
-					<div className={multi(styles.zone, styles.subbottom)}>
+					<DockZone parent={this} drag={drag} zone="subbottom" ref="zone.subbottom">
 						{items.subbottom}
-					</div>
+					</DockZone>
 				</div>
-				<div className={multi(styles.zone, styles.right)}>
+				<DockZone parent={this} drag={drag} zone="right" ref="zone.right">
 					{items.right}
-				</div>
+				</DockZone>
 			</div>
-			<div className={multi(styles.zone, styles.bottom)}>
+			<DockZone parent={this} drag={drag} zone="bottom" ref="zone.bottom">
 				{items.bottom}
-			</div>
+			</DockZone>
 		</div>;
 	}
 }

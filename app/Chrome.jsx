@@ -5,13 +5,13 @@ import styles from "./Chrome.module.scss";
 
 const close = function() {
 	"use strict";
-	const app = require('electron').remote.app;
+	const app = require("electron").remote.app;
 	app.quit();
 }
 
 const minimize = function() {
 	"use strict";
-	require('electron').remote.getCurrentWindow().minimize();
+	require("electron").remote.getCurrentWindow().minimize();
 }
 
 class TBButton extends React.Component {

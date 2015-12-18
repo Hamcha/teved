@@ -21,21 +21,25 @@
 		border-right: $dockBorderThickness solid $dockBorderColor;
 		flex-direction: column;
 		.dockableWidget { border-left: 0; border-bottom: 0; border-right: 0; }
+		.zoneDragTargetContent { flex-direction: column; }
 	}
 	&.right {
 		border-left: $dockBorderThickness solid $dockBorderColor;
 		flex-direction: column;
 		.dockableWidget { border-left: 0; border-bottom: 0; border-right: 0; }
+		.zoneDragTargetContent { flex-direction: column; }
 	}
 	&.top, &.subtop {
 		border-bottom: $dockBorderThickness solid $dockBorderColor;
 		flex-direction: row;
 		.dockableWidget { border-left: 0; border-bottom: 0; border-top: 0; }
+		.zoneDragTargetContent { flex-direction: row; }
 	}
 	&.bottom, &.subbottom {
 		border-top: $dockBorderThickness solid $dockBorderColor;
 		flex-direction: row;
 		.dockableWidget { border-left: 0; border-bottom: 0; border-top: 0; }
+		.zoneDragTargetContent { flex-direction: row; }
 	}
 
 	&.left *:first-child, &.right *:first-child {
@@ -66,12 +70,13 @@
 
 .dockableHead {
 	background-color: $dockBorderHeadBackground;
-	border-bottom: $dockBorderThickness solid $dockBorderColor;
+	//border-bottom: $dockBorderThickness solid $dockBorderColor;
 	font-size: $dockBorderHeadSize;
 	text-transform: uppercase;
 	padding: $dockBorderHeadPadding $dockBorderHeadPadding*1.8;
 	flex: 1;
 	flex-grow: 0;
+	cursor: -webkit-grab;
 }
 
 .dockableWidget {
@@ -85,4 +90,16 @@
 .widgetContent {
 	flex: 1;
 	display: flex;
+}
+
+.zoneDragTarget {
+	padding: $dockDragPadding;
+	& > div {
+		opacity: $dockDragOpacity;
+	}
+	display: flex !important;
+}
+.zoneDropTarget {
+	box-shadow: inset 0 0 $dockDragTargetGlow;
+	& > div { opacity: $dockDragTargetOpacity; }
 }
