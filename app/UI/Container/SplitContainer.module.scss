@@ -1,0 +1,27 @@
+@import "../../theme";
+
+.splitContainer {
+	display: flex;
+	flex: 1;
+}
+
+.split-v {
+	flex-direction: row;
+	& > .splitWidget {
+		border-right: $splitBorderThickness solid $splitBorderColor;
+		&:last-child { border-right: 0; }
+	}
+}
+
+.split-h {
+	flex-direction: column;
+	& > .splitWidget {
+		border-bottom: $splitBorderThickness solid $splitBorderColor;
+		&:last-child { border-bottom: 0; }
+	}
+}
+
+.splitWidget {
+	flex: 1;
+	display: flex;
+}

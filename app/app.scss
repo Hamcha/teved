@@ -6,6 +6,8 @@ body {
 	padding: 0;
 	background-color: $cBackground;
 	color: $cForeground;
+	-webkit-user-select: none;
+	cursor: default;
 }
 
 body, html {

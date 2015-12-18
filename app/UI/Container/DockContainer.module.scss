@@ -1,5 +1,4 @@
-@import 'ui.debug';
-@import "../theme";
+@import "../../theme";
 
 .container {
 	position: absolute;
@@ -20,12 +19,14 @@
 	&.left {
 		border-right: $dockBorderThickness solid $dockBorderColor;
 		flex-direction: column;
+		resize: horizontal;
 		.dockableWidget { border-left: 0; border-bottom: 0; border-right: 0; }
 		.zoneDragTargetContent { flex-direction: column; }
 	}
 	&.right {
 		border-left: $dockBorderThickness solid $dockBorderColor;
 		flex-direction: column;
+		resize: horizontal;
 		.dockableWidget { border-left: 0; border-bottom: 0; border-right: 0; }
 		.zoneDragTargetContent { flex-direction: column; }
 	}

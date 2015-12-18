@@ -2,7 +2,8 @@
 
 import React from "react";
 import Widget from "./UI/Widget";
-import DockContainer from "./UI/DockContainer";
+import SplitContainer from "./UI/Container/SplitContainer";
+import DockContainer from "./UI/Container/DockContainer";
 import styles from "./Editor.module.scss";
 
 class StageContainer extends Widget {
@@ -17,15 +18,10 @@ class Editor extends React.Component {
 		return <div className={styles.root}>
 			<DockContainer>
 				<StageContainer dock={{position: "left"}} />
-				<StageContainer dock={{position: "left"}} />
-				<StageContainer dock={{position: "subbottom"}} />
-				<StageContainer dock={{position: "subbottom"}} />
-				<StageContainer dock={{position: "right"}} />
-				<StageContainer dock={{position: "bottom"}} />
-				<StageContainer dock={{position: "bottom"}} />
-				<StageContainer dock={{position: "top"}} />
-				<StageContainer dock={{position: "top"}} />
-				<StageContainer dock={{position: "content", noBorder: true}} />
+				<SplitContainer dock={{position: "content", noBorder: true}} split="h">
+					<StageContainer/>
+					<StageContainer />
+				</SplitContainer>
 			</DockContainer>
 		</div>;
 	}

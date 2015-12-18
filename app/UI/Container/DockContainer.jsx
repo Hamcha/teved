@@ -1,23 +1,13 @@
 /* @flow */
 
-import React from "react";
-import styles from "./DockContainer.module.scss";
+import React           from "react";
+import WidgetContainer from "./WidgetContainer";
+import styles          from "./DockContainer.module.scss";
 
 const multi = function(...parts: Array<string>): string {
 	"use strict";
 	return parts.join(" ");
 };
-
-const getWidgetTitle = function(children: Array<Widget>|Widget): string {
-	"use strict";
-	// Take first widget if there are more than one
-	if (Array.isArray(children)) {
-		if (children.length > 0) {
-			children = children[0];
-		}
-	}
-	return children.type.getWidgetName();
-}
 
 /* START Drag callbacks */
 const startDrag = function(parent: DockContainer, id: number): (ev: Event) => void {
@@ -69,7 +59,7 @@ class DockableWidget extends React.Component {
 	};
 	render(): any {
 		let title = <div draggable="true" onDragStart={startDrag(this.props.parent, this.props.widgetid)} className={styles.dockableHead}>
-			<i className="fa fa-bars"></i> {getWidgetTitle(this.props.children)}
+			<i className="fa fa-bars"></i> {React.Children.only(this.props.children).type.getWidgetName()}
 		</div>;
 
 		// Check for props
@@ -124,7 +114,8 @@ class DockZone extends React.Component {
 	}
 }
 
-class DockContainer extends React.Component {
+class DockContainer extends WidgetContainer {
+	static getWidgetName(): string { return "Dock Container";	}
 	state: Object = {
 		drag: false,
 		dragid: 0
@@ -145,6 +136,8 @@ class DockContainer extends React.Component {
 		}
 	}
 	render(): any {
+		super.render();
+
 		let items: {[key: string]: Array<any>} = {
 			top      : [],
 			left     : [],
@@ -156,7 +149,7 @@ class DockContainer extends React.Component {
 		};
 
 		const that = this;
-		this.props.children.forEach(function(widget, i): (widget: any, i: number) => void {
+		this.widgets.forEach(function(widget, i): (widget: any, i: number) => void {
 			const data = widget.props.dock;
 			let side = "left"; // Default if not set
 			if (typeof data !== "undefined") {
@@ -166,7 +159,7 @@ class DockContainer extends React.Component {
 				}
 			}
 
-			items[side].push(<DockableWidget parent={that} widgetid={i} key={"w."+i} data={widget.props.dock} >{widget}</DockableWidget>);
+			items[side].push(<DockableWidget parent={that} widgetid={i} key={"w."+i} data={widget.props.dock}>{widget}</DockableWidget>);
 		})
 
 		const drag = this.state.drag;
