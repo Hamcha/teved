@@ -53,6 +53,7 @@ const handleDrop = function(parent: DockContainer, zone: string): (ev: Event) =>
 /* END Drag callbacks */
 
 class DockableWidget extends React.Component {
+	displayName: string = "DockableWidget";
 	static propTypes: Object = {
 		widgetid: React.PropTypes.number.isRequired,
 		data    : React.PropTypes.object
@@ -87,8 +88,10 @@ class DockableWidget extends React.Component {
 }
 
 class DockZone extends React.Component {
+	displayName: string = "DockZone";
 	static propTypes: Object = {
-		zone: React.PropTypes.string.isRequired
+		zone: React.PropTypes.string.isRequired,
+		drag: React.PropTypes.bool
 	};
 	state: Object = {
 		drop: false
@@ -115,6 +118,7 @@ class DockZone extends React.Component {
 }
 
 class DockContainer extends WidgetContainer {
+	displayName: string = "DockContainer";
 	static getWidgetName(): string { return "Dock Container";	}
 	state: Object = {
 		drag: false,

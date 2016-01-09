@@ -25,7 +25,23 @@ License
 Acknowledgements
 ----------------
 
+## electron-react-boilerplate
+
 Some parts of the configuration are based on C. T. Lin's electron boilerplate, licensed under MIT
 
 Website: https://github.com/chentsulin/electron-react-boilerplate
 License: https://github.com/chentsulin/electron-react-boilerplate/blob/master/LICENSE
+
+## Font Awesome
+
+The icons used in the default theme are from Font Awesome, licensed under SIL OFL 1.1/MIT
+
+Website: https://fortawesome.github.io
+License: https://fortawesome.github.io/Font-Awesome/license/
+
+## three.js
+
+The GLSL preview box is powered by three.js, licensed under MIT
+
+Website: http://threejs.org
+License: http://threejs.org/license

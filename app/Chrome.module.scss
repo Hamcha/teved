@@ -37,6 +37,7 @@
     padding-top: 0;
     color: $titlebarBtnColor;
     -webkit-app-region: no-drag;
+    transition: $titlebarBtnHoverTransition;
 
     &:hover {
         color: $titlebarBtnHoverText;
@@ -64,4 +65,8 @@
     display: inline-block;
     vertical-align: top;
     background: $titlebarBtnXHighlight;
+    .tbButton:hover {
+        background: $titlebarBtnXHighlightHover;
+        color: $titlebarBtnXHighlightHoverText;
+    }
 }
