@@ -10,7 +10,7 @@ const multi = function(...parts: Array<string>): string {
 };
 
 class SplitContainer extends WidgetContainer {
-	displayName: string = "SplitContainer";
+	static displayName: string = "SplitContainer";
 	static propTypes: Object = {
 		split: React.PropTypes.string
 	};

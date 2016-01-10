@@ -11,7 +11,10 @@ class ShaderViewRenderer {
 	mesh         : Three.Mesh;
 	renderer     : Three.WebGLRenderer;
 	controls     : OrbitControls;
-	constructor(canvas: HTMLCanvasElement) {
+	tev          : TEV;
+	constructor(canvas: HTMLCanvasElement, tev: TEV) {
+		this.tev = tev;
+
 		const ratio = canvas.width / canvas.height;
 
 		this.canvas = canvas;

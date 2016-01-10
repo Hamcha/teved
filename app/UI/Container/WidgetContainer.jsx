@@ -4,8 +4,9 @@ import React  from "react"
 import Widget from "../Widget"
 
 class WidgetContainer extends Widget {
-	widgets: Array<Widget> = [];
+	static displayName: string = "WidgetContainer";
 	static getWidgetName(): string { return "Widget Container";	}
+	widgets: Array<Widget> = [];
 	constructor(props: Object) {
 		super(props);
 	}

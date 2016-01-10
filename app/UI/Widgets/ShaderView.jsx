@@ -4,11 +4,16 @@ import React from "react";
 import Widget from "../Widget";
 import styles from "./ShaderView.module.scss";
 
+import TEV from "../../TEV/Core";
 import ShaderViewRenderer from "../../3D/ShaderViewRenderer";
 
 class ShaderView extends Widget {
-	displayName: string = "ShaderView";
+	static displayName: string = "ShaderView";
+    static propTypes: Object = {
+        tev: React.PropTypes.instanceOf(TEV)
+    };
 	static getWidgetName(): string { return "GLSL output"; }
+	renderer: ShaderViewRenderer;
 	constructor() {
 		super()
 		window.addEventListener("resize", this.resize.bind(this), false );
