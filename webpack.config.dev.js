@@ -18,7 +18,7 @@ config.entry = [
 
 config.output.publicPath = 'http://localhost:3000/dist/';
 
-config.module.loaders[0].loaders = ["react-hot", "babel?presets[]=react,presets[]=es2015,presets[]=stage-0"];
+config.module.loaders[0].loaders = ["react-hot", config.babelcmd];
 
 console.log("[Development config] Adding CSS compiling");
 

@@ -1,11 +1,32 @@
 /* eslint strict: 0 */
 const path = require('path');
 
+const buildQS = function(props) {
+	"use strict";
+	let out = [];
+	for (let prop in props) {
+		out.push(props[prop].map((item) => `${prop}[]=${item}`).join(","));
+	}
+	return out.join(",");
+}
+
+const babelcmd = 'babel?' + buildQS({
+	presets: [
+		"react",
+		"es2015",
+		"stage-0"
+	],
+	plugins: [
+		"transform-decorators-legacy"
+	]
+});
+
 module.exports = {
+	babelcmd: babelcmd,
 	module: {
 		loaders: [{
 			test: /\.jsx?$/,
-			loaders: ['babel?presets[]=react,presets[]=es2015,presets[]=stage-0'],
+			loaders: [babelcmd],
 			exclude: /node_modules/
 		},{
 			test: /\.eot|.otf|.woff|\.ttf/,

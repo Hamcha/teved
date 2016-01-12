@@ -3,6 +3,8 @@
 import React  from "react"
 import Widget from "../Widget"
 
+const addWidgetID = (child, i) => React.cloneElement(child, {ref: "widget-" + i});
+
 class WidgetContainer extends Widget {
 	static displayName: string = "WidgetContainer";
 	static getWidgetName(): string { return "Widget Container";	}
@@ -10,17 +12,8 @@ class WidgetContainer extends Widget {
 	constructor(props: Object) {
 		super(props);
 	}
-	componentWillReceiveProps() {
-		this.setState({
-			dirty: true
-		});
-	}
 	render(): string {
-		this.widgets = React.Children.map(this.props.children, function (child, i) {
-			return React.cloneElement(child, {
-				ref: "widget-" + i
-			});
-		});
+		this.widgets = React.Children.map(this.props.children, addWidgetID);
 	}
 }
 

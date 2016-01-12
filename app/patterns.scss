@@ -1,0 +1,12 @@
+@mixin grid($color, $cellSize) {
+    background-image:
+        -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, $color), color-stop(.25, transparent)),
+        -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.25, $color), color-stop(.25, transparent)),
+        -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.75, transparent), color-stop(.75, $color)),
+        -webkit-gradient(linear, 0 0, 100% 100%, color-stop(.75, transparent), color-stop(.75, $color));
+
+    background-size:$cellSize*2 $cellSize*2;
+    -webkit-background-size:$cellSize*2 ($cellSize*2)+1;
+
+    background-position:0 0, ($cellSize) 0, ($cellSize) -1*$cellSize, 0px ($cellSize);
+}

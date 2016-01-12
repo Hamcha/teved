@@ -1,65 +1,59 @@
 /* @flow */
 
 import React           from "react";
+import Widget          from "../Widget";
 import WidgetContainer from "./WidgetContainer";
 import styles          from "./DockContainer.module.scss";
 
-const multi = function(...parts: Array<string>): string {
-	"use strict";
-	return parts.join(" ");
+import { DropTarget, DragDropContext, DragSource } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
+
+const DragSourceType = {
+	WIDGET: "widget"
 };
 
-/* START Drag callbacks */
-const startDrag = function(parent: DockContainer, id: number): (ev: Event) => void {
-	"use strict";
-	return function(ev: Event) {
-		parent.setDrag(true, id);
-		ev.dataTransfer.setData("text/plain", id);
-	};
-};
+const widgetSource = {
+	beginDrag(props: Object): Object {
+		return { id: props.widgetid };
+	},
+	endDrag(props: Object, monitor: DragSourceMonitor) {
+		if (!monitor.didDrop()) {
+			return;
+		}
 
-const endDrag = function(parent: DockContainer): (ev: Event) => void {
-	"use strict";
-	return function() {
-		parent.setDrag(false);
-	};
-};
-
-const allowDrop = function(container: DockZone): (ev: Event) => void {
-	"use strict";
-	return function(ev: Event) {
-		ev.preventDefault();
-		ev.dataTransfer.dropEffect = "move";
-		container.setDrop(true);
+		const item: Object = monitor.getItem();
+		const target: Object = monitor.getDropResult();
+		props.parent.moveWidget(item.id, target.zone);
 	}
-};
+}
 
-const resetDrop = function(container: DockZone): (ev: Event) => void {
-	"use strict";
-	return function(ev: Event) {
-		ev.preventDefault();
-		container.setDrop(false);
+const zoneTarget = {
+	drop(props) {
+		return { zone: props.zone };
 	}
-};
+}
 
-const handleDrop = function(parent: DockContainer, zone: string): (ev: Event) => void {
-	"use strict";
-	return function(ev: Event) {
-		parent.moveWidget(ev.dataTransfer.getData("text"), zone);
-		ev.stopPropagation();
-		ev.preventDefault();
-	}
-};
-/* END Drag callbacks */
+const multi = (parts: Array<string>) => parts.join(" ");
 
+@DragSource(DragSourceType.WIDGET, widgetSource, (connect, monitor) => ({
+	connectDragSource: connect.dragSource(),
+	connectDragPreview: connect.dragPreview(),
+	isDragging: monitor.isDragging()
+}))
 class DockableWidget extends React.Component {
 	static displayName: string = "DockableWidget";
 	static propTypes: Object = {
 		widgetid: React.PropTypes.number.isRequired,
-		data    : React.PropTypes.object
+		data    : React.PropTypes.object,
+		// React DND
+		connectDragSource: React.PropTypes.func.isRequired,
+		connectDragPreview: React.PropTypes.func.isRequired,
+		isDragging: React.PropTypes.bool.isRequired,
 	};
 	render(): any {
-		let title = <div draggable="true" onDragStart={startDrag(this.props.parent, this.props.widgetid)} className={styles.dockableHead}>
+		const { connectDragSource, connectDragPreview } = this.props;
+
+		let title = <div className={styles.dockableHead}>
 			<i className="fa fa-bars"></i> {React.Children.only(this.props.children).type.getWidgetName()}
 		</div>;
 
@@ -78,121 +72,90 @@ class DockableWidget extends React.Component {
 			}
 		}
 
-		return <div className={styles.dockableWidget}>
-			{title}
-			<div className={styles.widgetContent}>
-				{this.props.children}
+		return connectDragPreview(
+			<div className={styles.dockableWidget}>
+				{connectDragSource(title)}
+				<div className={styles.widgetContent}>
+					{this.props.children}
+				</div>
 			</div>
-		</div>;
+		);
 	}
 }
 
+@DropTarget(DragSourceType.WIDGET, zoneTarget, (connect, monitor) => ({
+	connectDropTarget: connect.dropTarget(),
+	isOver: monitor.isOver(),
+	canDrop: monitor.canDrop()
+}))
 class DockZone extends React.Component {
 	static displayName: string = "DockZone";
 	static propTypes: Object = {
 		zone: React.PropTypes.string.isRequired,
-		drag: React.PropTypes.bool
+		items: React.PropTypes.arrayOf(DockableWidget).isRequired,
+		// React DND
+		connectDropTarget: React.PropTypes.func.isRequired,
+		isOver: React.PropTypes.bool.isRequired,
+		canDrop: React.PropTypes.bool.isRequired,
 	};
-	state: Object = {
-		drop: false
-	};
-	setDrop(drop: bool) {
-		this.setState({ drop });
+	getZoneItems(item: Widget): Array<Widget> {
+		const data = item.props.data;
+		let side = "left"; // Default if not set
+		if (typeof data !== "undefined" && typeof data.position === "string") {
+			side = data.position;
+		}
+		return side === this.props.zone;
 	}
 	render(): any {
+		const { canDrop, isOver, connectDropTarget } = this.props;
+
 		let zoneStyle = [styles.zone, styles[this.props.zone]];
-		if (this.props.drag === true) {
+		if (canDrop) {
 			zoneStyle.push(styles.zoneDragTarget);
 		}
-		if (this.state.drop === true) {
+		if (isOver) {
 			zoneStyle.push(styles.zoneDropTarget);
 		}
-		return <div onDrop={handleDrop(this.props.parent, this.props.zone)}
-		            onDragOver={allowDrop(this)}
-		            onDragLeave={resetDrop(this)}
-		            onDragExit={resetDrop(this)}
-		            className={multi.apply(this, zoneStyle)}>
-			{this.props.children}
-		</div>;
+		return connectDropTarget(
+			<div className={multi(zoneStyle)}>
+				{this.props.items.filter(this.getZoneItems.bind(this))}
+			</div>
+		);
 	}
 }
 
+@DragDropContext(HTML5Backend)
 class DockContainer extends WidgetContainer {
 	static displayName: string = "DockContainer";
-	static getWidgetName(): string { return "Dock Container";	}
-	state: Object = {
-		drag: false,
-		dragid: 0
-	};
-	setDrag(drag: bool, dragid: number) {
-		this.setState({ drag, dragid });
-	}
+	static getWidgetName(): string { return "Dock Container"; }
 	moveWidget(widgetid: number, zone: string) {
-		// Reset zone highlight status
-		this.refs["zone." + zone].setDrop(false);
 		// Change widget position
 		if (typeof this.props.children[widgetid].props.dock === "undefined") {
-			this.props.children[widgetid].props.dock = {
+			this.widgets[widgetid].props.dock = {
 				"position": zone
 			};
 		} else {
-			this.props.children[widgetid].props.dock.position = zone;
+			this.widgets[widgetid].props.dock.position = zone;
 		}
 	}
 	render(): any {
-		super.render();
-
-		let items: {[key: string]: Array<any>} = {
-			top      : [],
-			left     : [],
-			right    : [],
-			bottom   : [],
-			subtop   : [],
-			subbottom: [],
-			content  : []
-		};
-
 		const that = this;
-		this.widgets.forEach(function(widget, i): (widget: any, i: number) => void {
-			const data = widget.props.dock;
-			let side = "left"; // Default if not set
-			if (typeof data !== "undefined") {
-				// Check side
-				if (typeof data.position === "string" && data.position in items) {
-					side = data.position;
-				}
-			}
 
-			items[side].push(<DockableWidget parent={that} widgetid={i} key={"w."+i} data={widget.props.dock}>{widget}</DockableWidget>);
-		})
+		super.render();
+		this.dockableWidgets = this.widgets.map((widget, i) => <DockableWidget parent={that} widgetid={i} key={"w."+i} data={widget.props.dock}>{widget}</DockableWidget>);
 
-		const drag = this.state.drag;
-		return <div onDragEnd={endDrag(this)} className={styles.container}>
-			<DockZone parent={this} drag={drag} zone="top" ref="zone.top">
-				{items.top}
-			</DockZone>
+		return <div className={styles.container}>
+			<DockZone parent={this} items={this.dockableWidgets} zone="top" ref="zone.top" />
 			<div className={styles.middle}>
-				<DockZone parent={this} drag={drag} zone="left" ref="zone.left">
-					{items.left}
-				</DockZone>
+				<DockZone parent={this} items={this.dockableWidgets} zone="left" ref="zone.left" />
 				<div className={styles.center}>
-					<DockZone parent={this} drag={drag} zone="subtop" ref="zone.subtop">
-						{items.subtop}
-					</DockZone>
-					<div className={multi(styles.zone, styles.content)}>
-						{items.content}
-					</div>
-					<DockZone parent={this} drag={drag} zone="subbottom" ref="zone.subbottom">
-						{items.subbottom}
-					</DockZone>
+					<DockZone parent={this} items={this.dockableWidgets} zone="subtop" ref="zone.subtop" />
+					<DockZone parent={this} items={this.dockableWidgets} zone="content" ref="zone.content" />
+					<DockZone parent={this} items={this.dockableWidgets} zone="subbottom" ref="zone.subbottom" />
 				</div>
-				<DockZone parent={this} drag={drag} zone="right" ref="zone.right">
-					{items.right}
-				</DockZone>
+				<DockZone parent={this} items={this.dockableWidgets} zone="right" ref="zone.right" />
 			</div>
-			<DockZone parent={this} drag={drag} zone="bottom" ref="zone.bottom">
-				{items.bottom}
-			</DockZone>
+			<DockZone parent={this} items={this.dockableWidgets} zone="bottom" ref="zone.bottom" />
 		</div>;
 	}
 }

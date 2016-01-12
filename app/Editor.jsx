@@ -31,6 +31,7 @@ class Editor extends React.Component {
 		return <div className={styles.root}>
 			<DockContainer>
 				<StageContainer dock={{position: "left"}} />
+				<StageContainer dock={{position: "left"}} />
 				<SplitContainer dock={{position: "content", noBorder: true}} split="h">
 					<StageView tev={this.tev} />
 					<ShaderView tev={this.tev} />
