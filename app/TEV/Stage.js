@@ -3,7 +3,7 @@
 import Color        from "./Color";
 import type {Konst} from "./Enums";
 
-class Stage {
+export default class Stage {
 	// Color operation and parameters
 	color_op   : ?string;
 	color_bias : ?string;
@@ -102,5 +102,3 @@ class Stage {
 		this.alpha_konst = kid
 	}
 }
-
-export default Stage;

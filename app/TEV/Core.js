@@ -10,7 +10,7 @@ const InitialStageCount: number = 1;
 // Maximum number of stages is 16
 const MaxStages: number = 16;
 
-class Core {
+export default class Core {
 	stages  : Array<Stage>;
 	nstages : number;
 	register: Array<?Color>;
@@ -155,5 +155,3 @@ class Core {
 		this.register[regid] = color;
 	}
 }
-
-export default Core;

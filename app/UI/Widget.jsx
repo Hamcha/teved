@@ -3,7 +3,7 @@
 import React from "react";
 import styles from "./Widget.module.scss";
 
-class Widget extends React.Component {
+export default class Widget extends React.Component {
 	static displayName: string = "Widget";
 	static getWidgetName(): string { return "Unnamed Widget"; }
 	render(): any {
@@ -15,5 +15,3 @@ class Widget extends React.Component {
 		return <span />;
 	}
 }
-
-export default Widget;

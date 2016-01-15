@@ -3,7 +3,7 @@
 import      {Channels} from "./Enums";
 import type {Channel}  from "./Enums";
 
-class SwapTable {
+export default class SwapTable {
 	r: Channel;
 	g: Channel; // lewd
 	b: Channel;
@@ -28,5 +28,3 @@ class SwapTable {
 		}
 	}
 }
-
-export default SwapTable;

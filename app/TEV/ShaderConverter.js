@@ -9,7 +9,7 @@ const fpHeader: string = "ifdef GL_FRAGMENT_PRECISION_HIGH\n"+
                          "\tprecision mediump float;\n"+
                          "#endif\n";
 
-class ShaderConverter {
+export default class ShaderConverter {
 	core: Core;
 	constructor(core: Core) {
 		this.core = core;
@@ -19,5 +19,3 @@ class ShaderConverter {
 		return fpHeader + code;
 	}
 }
-
-export default ShaderConverter;

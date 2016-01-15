@@ -1,6 +1,6 @@
 /* @flow */
 
-class Color {
+export default class Color {
 	r: number;
 	g: number;
 	b: number;
@@ -15,5 +15,3 @@ class Color {
 		this.a = a;
 	}
 }
-
-export default Color;

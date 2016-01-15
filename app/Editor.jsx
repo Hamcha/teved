@@ -20,7 +20,7 @@ class StageContainer extends Widget {
 	}
 }
 
-class Editor extends React.Component {
+export default class Editor extends React.Component {
 	static displayName: string = "Editor";
 	tev: TEV;
 	constructor() {
@@ -31,7 +31,6 @@ class Editor extends React.Component {
 		return <div className={styles.root}>
 			<DockContainer>
 				<StageContainer dock={{position: "left"}} />
-				<StageContainer dock={{position: "left"}} />
 				<SplitContainer dock={{position: "content", noBorder: true}} split="h">
 					<StageView tev={this.tev} />
 					<ShaderView tev={this.tev} />
@@ -40,5 +39,3 @@ class Editor extends React.Component {
 		</div>;
 	}
 }
-
-export default Editor;

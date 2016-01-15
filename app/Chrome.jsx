@@ -15,6 +15,12 @@ const minimize = function() {
 }
 
 class TBButton extends React.Component {
+	static displayName: string = "TBButton";
+	static propTypes: Object = {
+		style: React.PropTypes.object,
+		action: React.PropTypes.func,
+		children: React.PropTypes.node
+	};
 	render(): any {
 		return <div className={styles.tbButton}
 		            style={this.props.style}
@@ -25,6 +31,7 @@ class TBButton extends React.Component {
 }
 
 class TitleBar extends React.Component {
+	static displayName: string = "TitleBar";
 	render(): any {
 		return <div className={styles.titleBar}>
 			<div className={styles.titleText}>TEVed - TEV Editor</div>
@@ -38,7 +45,11 @@ class TitleBar extends React.Component {
 	}
 }
 
-class Chrome extends React.Component {
+export default class Chrome extends React.Component {
+	static displayName: string = "Chrome";
+	static propTypes: Object = {
+		children: React.PropTypes.node
+	};
 	render(): any {
 		return <div className={styles.rootWnd}>
 			<TitleBar />
@@ -50,5 +61,3 @@ class Chrome extends React.Component {
 		</div>;
 	}
 }
-
-export default Chrome;

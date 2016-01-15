@@ -14,9 +14,11 @@ const DragSourceType = {
 
 const widgetSource = {
 	beginDrag(props: Object): Object {
+		"use strict";
 		return { id: props.widgetid };
 	},
 	endDrag(props: Object, monitor: DragSourceMonitor) {
+		"use strict";
 		if (!monitor.didDrop()) {
 			return;
 		}
@@ -29,6 +31,7 @@ const widgetSource = {
 
 const zoneTarget = {
 	drop(props) {
+		"use strict";
 		return { zone: props.zone };
 	}
 }
@@ -45,10 +48,11 @@ class DockableWidget extends React.Component {
 	static propTypes: Object = {
 		widgetid: React.PropTypes.number.isRequired,
 		data    : React.PropTypes.object,
+		children: React.PropTypes.node,
 		// React DND
 		connectDragSource: React.PropTypes.func.isRequired,
 		connectDragPreview: React.PropTypes.func.isRequired,
-		isDragging: React.PropTypes.bool.isRequired,
+		isDragging: React.PropTypes.bool.isRequired
 	};
 	render(): any {
 		const { connectDragSource, connectDragPreview } = this.props;
@@ -96,7 +100,7 @@ class DockZone extends React.Component {
 		// React DND
 		connectDropTarget: React.PropTypes.func.isRequired,
 		isOver: React.PropTypes.bool.isRequired,
-		canDrop: React.PropTypes.bool.isRequired,
+		canDrop: React.PropTypes.bool.isRequired
 	};
 	getZoneItems(item: Widget): Array<Widget> {
 		const data = item.props.data;
@@ -125,7 +129,7 @@ class DockZone extends React.Component {
 }
 
 @DragDropContext(HTML5Backend)
-class DockContainer extends WidgetContainer {
+export default class DockContainer extends WidgetContainer {
 	static displayName: string = "DockContainer";
 	static getWidgetName(): string { return "Dock Container"; }
 	moveWidget(widgetid: number, zone: string) {
@@ -159,5 +163,3 @@ class DockContainer extends WidgetContainer {
 		</div>;
 	}
 }
-
-export default DockContainer;

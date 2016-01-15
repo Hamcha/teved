@@ -4,12 +4,9 @@ import React           from "react"
 import WidgetContainer from "./WidgetContainer"
 import styles          from "./SplitContainer.module.scss"
 
-const multi = function(...parts: Array<string>): string {
-	"use strict";
-	return parts.join(" ");
-};
+const multi = (...parts: Array<string>) => parts.join(" ");
 
-class SplitContainer extends WidgetContainer {
+export default class SplitContainer extends WidgetContainer {
 	static displayName: string = "SplitContainer";
 	static propTypes: Object = {
 		split: React.PropTypes.string
@@ -29,5 +26,3 @@ class SplitContainer extends WidgetContainer {
 		</div>;
 	}
 }
-
-export default SplitContainer;

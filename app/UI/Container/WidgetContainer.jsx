@@ -5,7 +5,7 @@ import Widget from "../Widget"
 
 const addWidgetID = (child, i) => React.cloneElement(child, {ref: "widget-" + i});
 
-class WidgetContainer extends Widget {
+export default class WidgetContainer extends Widget {
 	static displayName: string = "WidgetContainer";
 	static getWidgetName(): string { return "Widget Container";	}
 	widgets: Array<Widget> = [];
@@ -16,5 +16,3 @@ class WidgetContainer extends Widget {
 		this.widgets = React.Children.map(this.props.children, addWidgetID);
 	}
 }
-
-export default WidgetContainer;

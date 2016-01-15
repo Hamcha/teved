@@ -10,7 +10,7 @@ let stripComments: (code: string) => string = function(code: string): string {
 	return code.replace(block, "").replace(line, "");
 }
 
-class Parser {
+export default class Parser {
 	core: Core;
 	constructor() {
 		this.core = new Core();
@@ -30,5 +30,3 @@ class Parser {
 		}
 	}
 }
-
-export default Parser;

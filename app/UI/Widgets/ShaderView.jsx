@@ -7,7 +7,7 @@ import styles from "./ShaderView.module.scss";
 import TEV from "../../TEV/Core";
 import ShaderViewRenderer from "../../3D/ShaderViewRenderer";
 
-class ShaderView extends Widget {
+export default class ShaderView extends Widget {
 	static displayName: string = "ShaderView";
     static propTypes: Object = {
         tev: React.PropTypes.instanceOf(TEV)
@@ -34,5 +34,3 @@ class ShaderView extends Widget {
 		</div>;
 	}
 }
-
-export default ShaderView;

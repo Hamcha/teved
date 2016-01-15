@@ -1,9 +1,10 @@
 /* @flow */
 
+import TEV from "../TEV/Core";
 import Three from "../vendor/three/three.js";
 import OrbitControls from "../vendor/three/OrbitControls.js";
 
-class ShaderViewRenderer {
+export default class ShaderViewRenderer {
 	canvas       : HTMLCanvasElement;
 	scene        : Three.Scene;
 	camera       : Three.PerspectiveCamera;
@@ -53,5 +54,3 @@ class ShaderViewRenderer {
 		});
 	}
 }
-
-export default ShaderViewRenderer;
