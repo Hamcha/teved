@@ -1,12 +1,42 @@
 @import "../../theme.scss";
 @import "../../patterns.scss";
 
+$stageWidth: 200px;
+$maxStages: 4;
+
 .container {
-    background: $topGridBackground;
-	@include grid($topGridColor, $topGridSize);
+    background: $stageViewGridBackground;
+	@include grid($stageViewGridColor, $stageViewGridSize);
 	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
+	overflow: hidden;
+}
+
+.stageContainer {
+	position: relative;
+	width: $stageWidth * $maxStages;
+}
+
+.stage {
+	float: left;
+	width: $stageWidth;
+	min-height: 600px;
+	position: relative;
+	background: $stageViewStageEvenBackground;
+	&:nth-child(odd) {
+		background: $stageViewStageOddBackground;
+	}
+
+	header {
+		color: $stageViewStageHeaderColor;
+		text-transform: uppercase;
+		text-align: center;
+		padding: 0.5rem;
+		font-size: 0.9rem;
+		word-spacing: 0.5rem;
+		font-weight: 300;
+	}
 }

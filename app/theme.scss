@@ -1,3 +1,5 @@
+@import "patterns.scss";
+
 $cBackground: #252525;
 $cForeground: #f4f4f4;
 
@@ -31,8 +33,12 @@ $splitBorderMargin: 0;
 
 $widgetBackground: #222;
 
-$topGridBackground: #222;
-$topGridColor: #1e1e1e;
-$topGridSize: 20px;
+$stageViewGridBackground: #222;
+$stageViewGridColor: #1e1e1e;
+$stageViewGridSize: 20px;
+
+$stageViewStageOddBackground: stageViewStageGradient(0);
+$stageViewStageEvenBackground: stageViewStageGradient(10);
+$stageViewStageHeaderColor: #999;
 
 $shaderViewBackground: linear-gradient(to bottom, #111 0%,#222 100%);

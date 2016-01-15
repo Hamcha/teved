@@ -10,3 +10,7 @@
 
     background-position:0 0, ($cellSize) 0, ($cellSize) -1*$cellSize, 0px ($cellSize);
 }
+
+@function stageViewStageGradient($s) {
+	@return linear-gradient(to bottom, rgba($s, $s, $s, 0.6) 0%, rgba(0,0,0,0) 100%);
+}
