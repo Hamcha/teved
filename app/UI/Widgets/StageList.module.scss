@@ -1,0 +1,12 @@
+@import "../../theme.scss";
+
+.container {
+}
+
+.stageListItem {
+	border-bottom: $stageListItemBorder;
+	header {
+		font-size: 0.8rem;
+		font-weight: 300;
+	}
+}

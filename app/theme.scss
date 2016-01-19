@@ -1,7 +1,11 @@
 @import "patterns.scss";
 
+// Window
+
 $cBackground: #252525;
 $cForeground: #f4f4f4;
+
+// Chrome
 
 $titlebarTextColor: #eee;
 $titlebarBtnColor: #ccc;
@@ -11,6 +15,8 @@ $titlebarBtnXHighlightHoverText: #fff;
 $titlebarBtnHoverText: #666;
 $titlebarBtnHoverBG: #ccc;
 $titlebarBtnHoverTransition: all 0.1s;
+
+// Dock container
 
 $dockContainerBackground: #111;
 
@@ -27,11 +33,17 @@ $dockDragPadding: 0.2rem;
 $dockDragTargetGlow: 20px #999;
 $dockDragTargetOpacity: 0.5;
 
+// Split container
+
 $splitBorderThickness: 1px;
 $splitBorderColor: #555;
 $splitBorderMargin: 0;
 
+// Widget
+
 $widgetBackground: #222;
+
+// Stage view
 
 $stageViewGridBackground: #222;
 $stageViewGridColor: #1e1e1e;
@@ -41,4 +53,10 @@ $stageViewStageOddBackground: stageViewStageGradient(0);
 $stageViewStageEvenBackground: stageViewStageGradient(10);
 $stageViewStageHeaderColor: #999;
 
+// Shader view
+
 $shaderViewBackground: linear-gradient(to bottom, #111 0%,#222 100%);
+
+// Stage list
+
+$stageListItemBorder: 1px solid #444;
