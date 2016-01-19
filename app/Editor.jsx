@@ -22,7 +22,7 @@ export default class Editor extends React.Component {
 	render(): any {
 		return <div className={styles.root}>
 			<DockContainer>
-				<StageList dock={{position: "left"}} />
+				<StageList tev={this.tev} dock={{position: "left"}} />
 				<SplitContainer dock={{position: "content", noBorder: true}} split="h">
 					<StageView tev={this.tev} />
 					<ShaderView tev={this.tev} />

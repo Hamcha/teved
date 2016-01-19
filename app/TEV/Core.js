@@ -44,6 +44,11 @@ export default class Core {
 			new Color()
 		];
 	}
+	GetStages(): Array<Stage> {
+		const that = this;
+		const filterfn = (_, i) => i < that.nstages;
+		return this.stages.filter(filterfn);
+	}
 	SetNumTevStages(n: number) {
 		// Make n an integer and check boundaries
 		n = n|0;

@@ -5,8 +5,12 @@
 
 .stageListItem {
 	border-bottom: $stageListItemBorder;
+    background-color: $stageListItemBackground;
+    margin: $stageListItemMargin;
 	header {
 		font-size: 0.8rem;
 		font-weight: 300;
+        word-spacing: 0.2rem;
+        padding: 0.1rem 0 0.2rem 0.3rem;
 	}
 }
