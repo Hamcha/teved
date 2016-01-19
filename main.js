@@ -14,6 +14,9 @@ if (process.env.NODE_ENV === "development") {
 	require("electron-debug")();
 }
 
+app.commandLine.appendSwitch('remote-debugging-port', '8315');
+app.commandLine.appendSwitch('host-rules', 'MAP * 127.0.0.1');
+
 app.on("window-all-closed", () => {
 	if (process.platform !== "darwin") app.quit();
 });
