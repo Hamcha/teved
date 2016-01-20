@@ -1,6 +1,16 @@
 @import "../../theme.scss";
 
 .container {
+	.remaining {
+		margin: 0.2rem;
+		text-align: center;
+		text-transform: uppercase;
+		word-spacing: 0.2rem;
+		font-size: 0.85rem;
+		font-weight: 300;
+		color: $stageListRemainingColor;
+		line-height: 1.2rem;
+	}
 }
 
 .stageListItem {

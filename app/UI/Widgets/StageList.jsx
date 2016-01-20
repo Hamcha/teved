@@ -30,10 +30,13 @@ export default class StageList extends Widget {
         tev: React.PropTypes.instanceOf(TEV)
     };
 	renderWidget(): any {
-		return <div style={styles.container}>
+		return <div className={styles.container}>
 			{this.props.tev.GetStages().map((stage, id) =>
 				<StageListItem key={id} id={id} stage={stage} />
 			)}
+			<div className={styles.remaining}>
+				{this.props.tev.stages.length - this.props.tev.nstages} stages available<br />
+			</div>
 		</div>;
 	}
 }
