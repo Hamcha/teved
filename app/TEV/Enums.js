@@ -1,6 +1,51 @@
 /* @flow */
 
-export type Channel = string
+export type Operation = string;
+
+export const TevOp: { [key: string]: Operation } = {
+	Add: "GX_TEV_ADD",
+	Sub: "GX_TEV_SUB",
+	// Color specific
+	CompRedGt: "GX_TEV_COMP_R8_GT",
+	CompRedEq: "GX_TEV_COMP_R8_EQ",
+	CompGreenRedGt: "GX_TEV_COMP_GR16_GT",
+	CompGreenRedEq: "GX_TEV_COMP_GR16_EQ",
+	CompBlueGreenRedGt: "GX_TEV_COMP_BGR24_GT",
+	CompBlueGreenRedEq: "GX_TEV_COMP_BGR24_EQ",
+	CompRGB8Gt: "GX_TEV_COMP_RGB8_GT",
+	CompRGB8Eq: "GX_TEV_COMP_RGB8_EQ",
+	// Alpha specific
+	CompAlphaGt: "GX_TEV_COMP_A8_GT",
+	CompAlphaEq: "GX_TEV_COMP_A8_EQ"
+};
+
+export type Bias = string;
+
+export const TevBias: { [key: string]: Bias } = {
+	Zero: "GX_TB_ZERO",
+	HalfAdd: "GX_TB_ADDHALF",
+	HalfSub: "GX_TB_SUBHALF"
+};
+
+export type Scale = string;
+
+export const TevScale:  { [key: string]: Scale } = {
+	NoScale: "GX_CS_SCALE_1",
+	Mult2: "GX_CS_SCALE_2",
+	Mult4: "GX_CS_SCALE_4",
+	Div2: "GX_CS_DIVIDE_2"
+};
+
+export type RegisterID = string;
+
+export const Registers: { [key: string]: RegisterID } = {
+	Previous: "GX_TEVPREV",
+	Reg0: "GX_TEVREG0",
+	Reg1: "GX_TEVREG1",
+	Reg2: "GX_TEVREG2"
+};
+
+export type Channel = string;
 
 export const Channels: { [key: string]: Channel } = {
 	Red:   "GX_CH_RED",
@@ -9,7 +54,7 @@ export const Channels: { [key: string]: Channel } = {
 	Alpha: "GX_CH_ALPHA"
 };
 
-export type Konst = string
+export type Konst = string;
 
 export const Konsts: { [key: string]: Konst } = {
 	"1"    : "GX_TEV_KCSEL_1",

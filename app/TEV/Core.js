@@ -3,7 +3,7 @@
 import Stage     from "./Stage";
 import SwapTable from "./SwapTable";
 import Color     from "./Color";
-import type {Channel} from "./Enums";
+import type {Channel, Operation, Bias, Scale, RegisterID, Konst} from "./Enums";
 
 // Default number of stages is 1
 const InitialStageCount: number = 1;
@@ -82,11 +82,11 @@ export default class Core {
 		this.stages[stageid].setOrder(texcoord, texmap, color);
 	}
 	SetTevColorOp(stageid: number,
-	              op     : string,
-	              bias   : string,
-	              scale  : string,
-	              clamp  : string,
-	              regid  : number) {
+	              op     : Operation,
+	              bias   : Bias,
+	              scale  : Scale,
+	              clamp  : bool,
+	              regid  : RegisterID) {
 		// Make stageid an integer and check boundaries
 		stageid = stageid|0;
 		if (!this.checkStage(stageid)) {
@@ -95,25 +95,25 @@ export default class Core {
 		this.stages[stageid].setColorOp(op, bias, scale, clamp, regid);
 	}
 	SetTevAlphaOp(stageid: number,
-	              op     : string,
-	              bias   : string,
-	              scale  : string,
-	              clamp  : string,
-	              regid  : number) {
+	              op     : Operation,
+	              bias   : Bias,
+	              scale  : Scale,
+	              clamp  : bool,
+	              regid  : RegisterID) {
 		stageid = stageid|0;
 		if (!this.checkStage(stageid)) {
 			throw "Invalid stage id";
 		}
 		this.stages[stageid].setAlphaOp(op, bias, scale, clamp, regid);
 	}
-	SetTevKColorSel(stageid: number, kid: string) {
+	SetTevKColorSel(stageid: number, kid: Konst) {
 		stageid = stageid|0;
 		if (!this.checkStage(stageid)) {
 			throw "Invalid stage id";
 		}
 		this.stages[stageid].setColorKonst(kid)
 	}
-	SetTevKAlphaSel(stageid: number, kid: string) {
+	SetTevKAlphaSel(stageid: number, kid: Konst) {
 		stageid = stageid|0;
 		if (!this.checkStage(stageid)) {
 			throw "Invalid stage id";

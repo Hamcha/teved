@@ -1,22 +1,22 @@
 /* @flow */
 
 import Color        from "./Color";
-import type {Konst} from "./Enums";
+import type {Operation, Bias, Scale, RegisterID, Konst} from "./Enums";
 
 export default class Stage {
 	// Color operation and parameters
-	color_op   : ?string;
-	color_bias : ?string;
-	color_scale: ?string;
-	color_clamp: ?string;
-	color_regid: ?number;
+	color_op   : ?Operation;
+	color_bias : ?Bias;
+	color_scale: ?Scale;
+	color_clamp: ?bool;
+	color_regid: ?RegisterID;
 
 	// Alpha operation and parameters
-	alpha_op   : ?string;
-	alpha_bias : ?string;
-	alpha_scale: ?string;
-	alpha_clamp: ?string;
-	alpha_regid: ?number;
+	alpha_op   : ?Operation;
+	alpha_bias : ?Bias;
+	alpha_scale: ?Scale;
+	alpha_clamp: ?bool;
+	alpha_regid: ?RegisterID;
 
 	// Input parameters for color operation
 	color_a: ?string;
@@ -61,22 +61,22 @@ export default class Stage {
 		this.color_konst = this.alpha_konst = null;
 		this.ras_swap = this.tex_swap = null;
 	}
-	setColorOp(op     : string,
-	           bias   : string,
-	           scale  : string,
-	           clamp  : string,
-	           regid  : number) {
+	setColorOp(op     : Operation,
+	           bias   : Bias,
+	           scale  : Scale,
+	           clamp  : bool,
+	           regid  : RegisterID) {
 		this.color_op = op;
 		this.color_bias = bias;
 		this.color_scale = scale;
 		this.color_clamp = clamp;
 		this.color_regid = regid;
 	}
-	setAlphaOp(op     : string,
-	           bias   : string,
-	           scale  : string,
-	           clamp  : string,
-	           regid  : number) {
+	setAlphaOp(op     : Operation,
+	           bias   : Bias,
+	           scale  : Scale,
+	           clamp  : bool,
+	           regid  : RegisterID) {
 		this.alpha_op = op;
 		this.alpha_bias = bias;
 		this.alpha_scale = scale;
@@ -95,10 +95,10 @@ export default class Stage {
 		this.ras_swap = ras_sel;
 		this.tex_swap = tex_sel;
 	}
-	setColorKonst(kid: string) {
+	setColorKonst(kid: Konst) {
 		this.color_konst = kid
 	}
-	setAlphaKonst(kid: string) {
+	setAlphaKonst(kid: Konst) {
 		this.alpha_konst = kid
 	}
 }
