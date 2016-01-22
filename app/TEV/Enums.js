@@ -29,7 +29,7 @@ export const TevBias: { [key: string]: Bias } = {
 
 export type Scale = string;
 
-export const TevScale:  { [key: string]: Scale } = {
+export const TevScale: { [key: string]: Scale } = {
 	NoScale: "GX_CS_SCALE_1",
 	Mult2: "GX_CS_SCALE_2",
 	Mult4: "GX_CS_SCALE_4",

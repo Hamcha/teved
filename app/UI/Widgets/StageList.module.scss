@@ -15,12 +15,45 @@
 
 .stageListItem {
 	border-bottom: $stageListItemBorder;
-    background-color: $stageListItemBackground;
-    margin: $stageListItemMargin;
+	background-color: $stageListItemBackground;
+	margin: $stageListItemMargin;
+	transition: background $stageListItemHoverTransition;
+
+	&:hover {
+		background-color: $stageListItemBackgroundHover;
+		cursor: pointer;
+	}
+
 	header {
 		font-size: 0.8rem;
 		font-weight: 300;
-        word-spacing: 0.2rem;
-        padding: 0.1rem 0 0.2rem 0.3rem;
+		word-spacing: 0.2rem;
+		padding: 0.1rem 0 0.2rem 0.3rem;
+		color: $stageListItemHeaderColor;
+	}
+
+	.stageSummary {
+		display: flex;
+
+		.stageSummaryLeftHeader, .stageSummaryCell {
+			flex: 1;
+			text-align: center;
+			font-size: 0.9rem;
+			font-weight: 300;
+
+			.stageSummaryCellHeader {
+				font-size: 0.75rem;
+				text-transform: uppercase;
+				letter-spacing: 0.05rem;
+				color: $stageListItemHeaderColor;
+			}
+		}
+
+		.stageSummaryLeftHeader {
+			text-align: right;
+			max-width: 0.7rem;
+			font-size: 0.9rem;
+			color: $stageListItemHeaderColor;
+		}
 	}
 }

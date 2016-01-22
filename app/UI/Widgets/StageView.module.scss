@@ -1,9 +1,6 @@
 @import "../../theme.scss";
 @import "../../patterns.scss";
 
-$stageWidth: 200px;
-$maxStages: 16;
-
 .container {
     background: $stageViewGridBackground;
 	@include grid($stageViewGridColor, $stageViewGridSize);
@@ -17,12 +14,10 @@ $maxStages: 16;
 
 .stageContainer {
 	position: relative;
-	width: $stageWidth * $maxStages;
 }
 
 .stage {
 	float: left;
-	width: $stageWidth;
 	min-height: 600px;
 	position: relative;
 	background: $stageViewStageEvenBackground;

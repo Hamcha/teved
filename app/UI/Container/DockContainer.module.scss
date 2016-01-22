@@ -10,6 +10,7 @@
 
 .zone {
 	flex: 1;
+	min-width: $dockZoneMinWidth;
 	display: flex;
 	position: relative;
 	background-color: $dockContainerBackground;

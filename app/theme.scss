@@ -33,6 +33,8 @@ $dockDragPadding: 0.2rem;
 $dockDragTargetGlow: 20px #999;
 $dockDragTargetOpacity: 0.5;
 
+$dockZoneMinWidth: 250px;
+
 // Split container
 
 $splitBorderThickness: 1px;
@@ -63,4 +65,8 @@ $stageListRemainingColor: #999;
 
 $stageListItemBorder: 1px solid #444;
 $stageListItemBackground: #444;
+$stageListItemHeaderColor: #bbb;
 $stageListItemMargin: 1px;
+
+$stageListItemBackgroundHover: #666;
+$stageListItemHoverTransition: 0.1s;

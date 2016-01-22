@@ -18,6 +18,7 @@ export default class Editor extends React.Component {
 	constructor() {
 		super();
 		this.tev = new TEV();
+		this.tev.SetNumTevStages(3);
 	}
 	render(): any {
 		return <div className={styles.root}>

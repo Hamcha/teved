@@ -1,22 +1,23 @@
 /* @flow */
 
 import Color        from "./Color";
+import {TevOp, TevBias, TevScale, Registers} from "./Enums";
 import type {Operation, Bias, Scale, RegisterID, Konst} from "./Enums";
 
 export default class Stage {
 	// Color operation and parameters
-	color_op   : ?Operation;
-	color_bias : ?Bias;
-	color_scale: ?Scale;
-	color_clamp: ?bool;
-	color_regid: ?RegisterID;
+	color_op   : Operation  = TevOp.Add;
+	color_bias : Bias       = TevBias.Zero;
+	color_scale: Scale      = TevScale.NoScale;
+	color_clamp: bool       = true;
+	color_regid: RegisterID = Registers.Previous;
 
 	// Alpha operation and parameters
-	alpha_op   : ?Operation;
-	alpha_bias : ?Bias;
-	alpha_scale: ?Scale;
-	alpha_clamp: ?bool;
-	alpha_regid: ?RegisterID;
+	alpha_op   : Operation  = TevOp.Add;
+	alpha_bias : Bias       = TevBias.Zero;
+	alpha_scale: Scale      = TevScale.NoScale;
+	alpha_clamp: bool       = true;
+	alpha_regid: RegisterID = Registers.Previous;
 
 	// Input parameters for color operation
 	color_a: ?string;
@@ -44,17 +45,7 @@ export default class Stage {
 	tex_swap: ?number;
 
 	constructor() {
-		// Null everything
-		this.color_op = null;
-		this.color_bias = null;
-		this.color_scale = null;
-		this.color_clamp = null;
-		this.color_regid = null;
-		this.alpha_op = null;
-		this.alpha_bias = null;
-		this.alpha_scale = null;
-		this.alpha_clamp = null;
-		this.alpha_regid = null;
+		// Put default values to everything
 		this.color_a = this.color_b = this.color_c = this.color_d = null;
 		this.alpha_a = this.alpha_b = this.alpha_c = this.alpha_d = null;
 		this.texcoord = this.texmap = this.color = null;
