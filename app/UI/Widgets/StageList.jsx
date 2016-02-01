@@ -49,66 +49,59 @@ class StageListItem extends React.Component {
 		stage:   React.PropTypes.instanceOf(TEVStage)
 	};
 	render(): any {
+		const stage = this.props.stage;
+		const genBlock = (data) => <div className={styles.stageSummaryCell}>
+			<div className={styles.stageSummaryCellHeader}>{data.Name}</div>
+				{data.Blocks.map((item) => <div>{item}</div>)}
+		</div>;
+
+		const fnblocks = [
+			{
+				Name: "Op",
+				Blocks: [ OpNames[stage.color_op], OpNames[stage.alpha_op] ]
+			},{
+				Name: "Bias",
+				Blocks: [ BiasNames[stage.color_bias], BiasNames[stage.alpha_bias] ]
+			},{
+				Name: "Scale",
+				Blocks: [ ScaleNames[stage.color_scale], ScaleNames[stage.alpha_scale] ]
+			},{
+				Name: "Clamp",
+				Blocks: [ stage.color_clamp ? "✓" : "-", stage.alpha_clamp ? "✓" : "-" ]
+			},{
+				Name: "RegID",
+				Blocks: [ RegNames[stage.color_regid], RegNames[stage.alpha_regid] ]
+			}
+		];
+
+		const opblocks = [
+			{ Name: "A", Blocks: [ "lol" ] },
+			{ Name: "B", Blocks: [ "lol" ] },
+			{ Name: "C", Blocks: [ "lol" ] },
+			{ Name: "D", Blocks: [ "lol" ] }
+		]
+
 		const stageOperationSummary = <div className={styles.stageSummary}>
 			<div className={styles.stageSummaryLeftHeader}>
 				<div className={styles.stageSummaryCellHeader}>&nbsp;</div>
-				<div className={styles.stageSummaryColor}>
-					C
+				<div className={styles.stageSummaryLeftHeaderIcon}>
+					<img src="resources/Images/colorcircle.svg" />
 				</div>
-				<div className={styles.stageSummaryColor}>
-					A
-				</div>
-			</div>
-			<div className={styles.stageSummaryCell}>
-				<div className={styles.stageSummaryCellHeader}>Op</div>
-				<div className={styles.stageSummaryColor}>
-					{OpNames[this.props.stage.color_op]}
-				</div>
-				<div className={styles.stageSummaryColor}>
-					{OpNames[this.props.stage.alpha_op]}
+				<div className={styles.stageSummaryLeftHeaderIcon}>
+					<img src="resources/Images/alphabox.svg" />
 				</div>
 			</div>
-			<div className={styles.stageSummaryCell}>
-				<div className={styles.stageSummaryCellHeader}>Bias</div>
-				<div className={styles.stageSummaryColor}>
-					{BiasNames[this.props.stage.color_bias]}
-				</div>
-				<div className={styles.stageSummaryColor}>
-					{BiasNames[this.props.stage.alpha_bias]}
-				</div>
-			</div>
-			<div className={styles.stageSummaryCell}>
-				<div className={styles.stageSummaryCellHeader}>Scale</div>
-				<div className={styles.stageSummaryColor}>
-					{ScaleNames[this.props.stage.color_scale]}
-				</div>
-				<div className={styles.stageSummaryColor}>
-					{ScaleNames[this.props.stage.alpha_scale]}
-				</div>
-			</div>
-			<div className={styles.stageSummaryCell}>
-				<div className={styles.stageSummaryCellHeader}>Clamp</div>
-				<div className={styles.stageSummaryColor}>
-					{this.props.stage.color_clamp ? "✓" : "-"}
-				</div>
-				<div className={styles.stageSummaryColor}>
-					{this.props.stage.alpha_clamp ? "✓" : "-"}
-				</div>
-			</div>
-			<div className={styles.stageSummaryCell}>
-				<div className={styles.stageSummaryCellHeader}>RegID</div>
-				<div className={styles.stageSummaryColor}>
-					{RegNames[this.props.stage.color_regid]}
-				</div>
-				<div className={styles.stageSummaryColor}>
-					{RegNames[this.props.stage.alpha_regid]}
-				</div>
-			</div>
+			{fnblocks.map(genBlock)}
+		</div>;
+
+		const stageOperandsSummary = <div className={styles.stageSummary}>
+			{opblocks.map(genBlock)}
 		</div>;
 
 		return <div className={styles.stageListItem}>
 			<header>STAGE {this.props.stageID}</header>
 			{stageOperationSummary}
+			{stageOperandsSummary}
 		</div>;
 	}
 }
