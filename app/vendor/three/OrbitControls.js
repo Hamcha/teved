@@ -707,4 +707,6 @@ THREE.OrbitControls = function (object, domElement, renderFn) {
 THREE.OrbitControls.prototype = Object.create( THREE.EventDispatcher.prototype );
 THREE.OrbitControls.prototype.constructor = THREE.OrbitControls;
 
-module.exports = THREE.OrbitControls;
+module.exports = {
+	OrbitControls: THREE.OrbitControls
+};

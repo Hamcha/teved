@@ -1,8 +1,9 @@
 /* @flow */
 
 import TEV from "../TEV/Core";
+
 import Three from "../vendor/three/three.js";
-import OrbitControls from "../vendor/three/OrbitControls.js";
+import {OrbitControls} from "../vendor/three/OrbitControls.js";
 
 export default class ShaderViewRenderer {
 	canvas       : HTMLCanvasElement;

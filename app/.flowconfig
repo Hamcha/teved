@@ -1,8 +1,12 @@
-[ignore]
-*/vendor/*
-
 [include]
 
+[ignore]
+.*/vendor/.*
+
 [libs]
+interfaces/
 
 [options]
+suppress_comment=\\(.\\|\n\\)*\\$FlowIssue
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable

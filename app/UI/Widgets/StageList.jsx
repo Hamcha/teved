@@ -3,6 +3,7 @@
 import React from "react";
 
 import Widget from "../Widget";
+import Dropdown from "../Components/Dropdown";
 
 import TEV       from "../../TEV/Core";
 import TEVStage  from "../../TEV/Stage";
@@ -50,7 +51,7 @@ class StageListItem extends React.Component {
 	};
 	render(): any {
 		const stage = this.props.stage;
-		const genBlock = (data) => <div className={styles.stageSummaryCell}>
+		/*const genBlock = (data) => <div className={styles.stageSummaryCell}>
 			<div className={styles.stageSummaryCellHeader}>{data.Name}</div>
 				{data.Blocks.map((item) => <div>{item}</div>)}
 		</div>;
@@ -96,12 +97,11 @@ class StageListItem extends React.Component {
 
 		const stageOperandsSummary = <div className={styles.stageSummary}>
 			{opblocks.map(genBlock)}
-		</div>;
+		</div>;*/
 
 		return <div className={styles.stageListItem}>
 			<header>STAGE {this.props.stageID}</header>
-			{stageOperationSummary}
-			{stageOperandsSummary}
+			<Dropdown label="test" choices={["a", "bb", "ca c"]} />
 		</div>;
 	}
 }
